@@ -1,0 +1,424 @@
+﻿@model BLMS.ViewModel.RenewalLicenseSiteViewModel
+
+@{
+    ViewData["Title"] = "Site User";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title text-muted font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>LICENSE DETAILS</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Create" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                @if ((Model.RenewalLicense.RenewReminderDT.Date - DateTime.Now.Date).Days > 0 | Model.RenewalLicense.RenewReminderDT.ToString() == "9999-12-31 00:00:00.000")
+                                                {
+                                                    <div class="card-header dusty-grass-gradient text-left" style="font-size: 14px;">
+                                                        <strong><i class="far fa fa-check-square ml-1 text-black"></i> This license has been renewed.</strong>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="card-header young-passion-gradient text-left" style="font-size: 14px;">
+                                                        <strong><i class="far fa fa-window-close ml-1 text-black"></i> This license has been expired! Please renew this license.</strong>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+
+                                                <input type="hidden" asp-for="RenewalLicense.LicenseID" />
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.LicenseName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.LicenseName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> License Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm mb-0">
+                                                                <input asp-for="RenewalLicense.RegistrationNo" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.RegistrationNo" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Registration No</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.SerialNo" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.SerialNo" class="control-label font-weight-bold" style="font-size:18px;">Serial No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.CategoryName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.CategoryName" class="control-label font-weight-bold" style="font-size:18px;">License Type</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.DivName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.DivName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.UnitName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.UnitName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.IssuedDT))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.IssuedDT" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.IssuedDT" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="RenewalLicense.IssuedDT" class="mdb-main-label font-weight-bold" style="font-size:18px;">Issued Date</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.ExpiredDT))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.ExpiredDT" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.ExpiredDT" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="RenewalLicense.ExpiredDT" class="mdb-main-label font-weight-bold" style="font-size:18px;">Expired Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Person in Charge (PIC)
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.PIC1Name))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC1Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC1Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="RenewalLicense.PIC1Name" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> PIC 1 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.PIC2Name))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC2Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC2Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="RenewalLicense.PIC2Name" class="control-label font-weight-bold" style="font-size:18px;">PIC 2 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.PIC3Name))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC3Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC3Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="RenewalLicense.PIC3Name" class="control-label font-weight-bold" style="font-size:18px;">PIC 3 Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        File Attachment
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="input-group input-group-sm mb-3">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.LicenseFileName))
+                                                                {
+                                                                    <i class="text-sm font-italic" style="font-size: 13px;">No attachment available.</i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="text" class="form-control" asp-for="RenewalLicense.LicenseFileName" style="font-size: 13px;">
+                                                                    <div class="input-group-prepend">
+                                                                        <a class="input-group-text font-weight-bold" href="@Url.Action("DownloadLicenseFile", "LicenseSite", new {id=Model.RenewalLicense.LicenseID})" style="font-size: 13px;">Download License File</a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Remarks
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.Remarks))
+                                                                {
+                                                                    <textarea asp-for="RenewalLicense.Remarks" rows="3" placeholder="-" class="md-textarea form-control" onkeydown="return false" style="font-size:13px;"></textarea>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <textarea asp-for="RenewalLicense.Remarks" rows="3" class="md-textarea form-control" onkeydown="return false" style="font-size:13px;"></textarea>
+                                                                }
+
+                                                                <label asp-for="RenewalLicense.Remarks" class="control-label font-weight-bold" style="font-size:18px;">Remarks</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        History Log
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div>
+                                                                <table id="LicenseHQ" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                                                    <!-- Table head -->
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-sm font-weight-bold col-1 text-center" style="font-size: 12px;">
+                                                                                No.
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                License Name
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Registration No
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Serial No
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Person In Charge
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Issued & Expired Date
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold text-center col-1" style="font-size: 12px;">File</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <!-- Table head -->
+                                                                    <!-- Table body -->
+                                                                    <tbody>
+                                                                        @foreach (var item in Model.History)
+                                                                        {
+                                                                            <tr>
+                                                                                @*Index No*@
+                                                                                <td class="text-sm text-center" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.IndexNo)
+                                                                                </td>
+                                                                                @*Unit Name*@
+                                                                                <td class="text-sm col-3" style="font-size: 12px;">
+                                                                                    <span>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryLicenseName)
+
+                                                                                        <br />
+
+                                                                                        @if (item.HistoryisRegistered == true)
+                                                                                        {
+                                                                                            <span class="badge bg-success text-sm">Registered</span>
+                                                                                        }
+                                                                                        else if (item.HistoryisRenewed == true)
+                                                                                        {
+                                                                                            <span class="badge bg-secondary text-sm">Renewed</span>
+                                                                                        }
+
+                                                                                        @*expired badge*@
+                                                                                        @if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 0)
+                                                                                        {
+                                                                                            <span class="badge bg-danger text-sm">Expired</span>
+                                                                                        }
+                                                                                        else if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 90)
+                                                                                        {
+                                                                                            <span class="badge bg-warning text-sm">Expiring</span>
+                                                                                        }
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.HistoryRegistrationNo)
+                                                                                </td>
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.HistorySerialNo)
+                                                                                </td>
+                                                                                @*Person In Charge*@
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryPIC1Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 1:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC1Name)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (string.IsNullOrEmpty(item.HistoryPIC2Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 2:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC2Name)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryPIC3Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 3:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC3Name)
+                                                                                    }
+                                                                                </td>
+                                                                                @*IssuedDT & ExpiredDT*@
+                                                                                <td class="text-sm text-center col-2" style="font-size: 12px;">
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryIssuedDT))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">Issued Date:</label>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryIssuedDT)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryExpiredDT))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">Expired Date:</label>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryExpiredDT)
+                                                                                    }
+                                                                                </td>
+                                                                                @*Download File*@
+                                                                                <td class="text-center col-1" style="font-size: 12px;">
+                                                                                    @if (item.HistoryhasFile == true)
+                                                                                    {
+                                                                                        <a class="btn btn-outline-dark heavy-rain-gradient btn-rounded btn-sm px-2" title="Download License File" href="@Url.Action("DownloadLicenseFile", "LicenseAdmin", new {id=item.HistoryLicenseID})">
+                                                                                            <i class="fas fa-download mt-0"></i>
+                                                                                        </a>
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                    <!-- Table body -->
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

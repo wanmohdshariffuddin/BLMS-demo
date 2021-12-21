@@ -1,0 +1,206 @@
+﻿@model IEnumerable<BLMS.Models.License.LicenseAllUser>
+
+@{
+    ViewData["Title"] = "Welcome to BLMS";
+    Layout = "~/Views/Shared/_UniversalLayout.cshtml";
+}
+
+<section id="license" class="text-center my-5">
+
+    <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+        <strong>LIST OF LICENSE</strong>
+    </h2>
+
+    <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
+        In this gridview, user can view the details of license and download the licenses.
+    </p>
+
+    <div class="row wow fadeIn" data-wow-delay="0.2s" style="font-size: 12px;">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="LicenseAll" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">No.</th>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                    @Html.DisplayNameFor(model => model.UnitName)
+                                </th>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                    @Html.DisplayNameFor(model => model.LicenseName)
+                                </th>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                    @Html.DisplayNameFor(model => model.CategoryName)
+                                </th>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                    @Html.DisplayNameFor(model => model.RegistrationNo)
+                                </th>
+                                <th class="text-sm font-weight-bold" style="font-size: 12px;">PIC</th>
+                                <th class="text-sm font-weight-bold text-center" style="font-size: 12px;">Date</th>
+                                <th class="text-sm font-weight-bold text-center" style="font-size: 12px;">User</th>
+                                <th class="text-sm font-weight-bold text-center" style="font-size: 12px;">File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 1; }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-sm text-center" style="font-size: 12px;">
+                                        @i
+                                    </td>
+                                    <td class="text-sm" style="font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.UnitName)
+                                    </td>
+                                    <td class="text-sm" style="font-size: 12px;">
+                                        @if (item.isRegistered == true)
+                                        {
+                                            <span class="font-weight-bold" style="font-size: 12px;">@Html.DisplayFor(modelItem => item.LicenseName)</span>
+                                            <br />
+                                            <span class="badge bg-success text-sm">Registered</span>
+                                        }
+                                        else if (item.isRenewed == true)
+                                        {
+                                            <span class="font-weight-bold" style="font-size: 12px;">@Html.DisplayFor(modelItem => item.LicenseName)</span>
+                                            <br />
+                                            <span class="badge bg-secondary text-sm">Renewed</span>
+                                        }
+
+                                        @if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 0 && item.RenewReminderDT.ToString() != "9999-12-31 00:00:00.000")
+                                        {
+                                            <span class="badge bg-danger text-sm">Expired</span>
+                                        }
+                                    </td>
+                                    <td class="text-sm" style="font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
+                                    </td>
+                                    <td class="text-sm" style="font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.RegistrationNo)
+                                    </td>
+                                    <td class="text-sm" style="font-size: 12px;">
+                                        @if (!string.IsNullOrEmpty(item.PIC1Name))
+                                        {
+                                            <label class="font-weight-bold">PIC 1:</label>
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.PIC1Name)
+                                            <br /><br />
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(item.PIC2Name))
+                                        {
+                                            <label class="font-weight-bold">PIC 2:</label>
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.PIC2Name)
+                                            <br /><br />
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(item.PIC3Name))
+                                        {
+                                            <label class="font-weight-bold">PIC 3:</label>
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.PIC3Name)
+                                        }
+                                    </td>
+                                    <td class="text-sm text-center" style="font-size: 12px;">
+                                        @if (!string.IsNullOrEmpty(item.IssuedDT))
+                                        {
+                                            <label class="font-weight-bold">Issued Date:</label>
+                                            @Html.DisplayFor(modelItem => item.IssuedDT)
+                                            <br /><br />
+                                        }
+
+                                        @if (!string.IsNullOrEmpty(item.ExpiredDT))
+                                        {
+                                            <label class="font-weight-bold">Expired Date:</label>
+                                            @Html.DisplayFor(modelItem => item.ExpiredDT)
+                                        }
+
+                                        @if (string.IsNullOrEmpty(item.IssuedDT) && string.IsNullOrEmpty(item.ExpiredDT))
+                                        {
+                                            <i class="text-sm font-italic" style="font-size: 12px;">No Date</i>
+                                        }
+                                    </td>
+                                    <td class="text-sm text-center" style="font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.UserType)
+                                    </td>
+                                    <td class="text-center" style="font-size: 12px;">
+                                        @if (item.hasFile == true && item.UserType == "Site")
+                                        {
+                                            <a class="btn btn-outline-dark heavy-rain-gradient btn-rounded btn-sm px-2" title="Download License File" href="@Url.Action("DownloadSiteLicenseFile", "AllUser", new {id=item.LicenseID})">
+                                                <i class="fas fa-download mt-0"></i>
+                                            </a>
+                                        }
+                                        else if (item.hasFile == true && item.UserType == "HQ")
+                                        {
+                                            <a class="btn btn-outline-dark heavy-rain-gradient btn-rounded btn-sm px-2" title="Download License File" href="@Url.Action("DownloadHQLicenseFile", "AllUser", new {id=item.LicenseID})">
+                                                <i class="fas fa-download mt-0"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <i class="text-sm font-italic" style="font-size: 12px;">No Attachment</i>
+                                        }
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section CSS{
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="~/mdb/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/mdb/css/mdb.min.css" rel="stylesheet" />
+    <link href="~/css/AllUser.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 12px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/mdb/js/jquery-3.4.1.min.js"></script>
+    <script src="~/mdb/js/popper.min.js"></script>
+    <script src="~/mdb/js/bootstrap.js"></script>
+    <script src="~/mdb/js/mdb.min.js"></script>
+    <script src="~/mdb/js/addons/datatables.min.js"></script>
+    <script src="~/mdb/js/addons/datatables-select.min.js"></script>
+
+    <script>
+        new WOW().init();
+
+        $(document).ready(function () {
+            $('#LicenseAll').DataTable();
+            $('#LicenseAll_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#LicenseAll_wrapper .dataTables_filter').find('input').each(function () {
+                $('input').attr("placeholder", "Search");
+                $('input').attr("style", 'font-size: 12px');
+                $('input').removeClass('form-control-sm');
+            });
+            $('#LicenseAll_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#LicenseAll_wrapper .dataTables_filter').addClass('md-form');
+            $('#LicenseAll_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#LicenseAll_wrapper select').addClass('mdb-select');
+            $('#LicenseAll_wrapper .mdb-select').materialSelect();
+            $('#LicenseAll_wrapper .dataTables_filter').find('label').remove();
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

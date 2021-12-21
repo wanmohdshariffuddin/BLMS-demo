@@ -1,0 +1,241 @@
+﻿@model BLMS.Models.SOP.CompetentPersonnel
+
+@{
+    ViewData["Title"] = "Competent Personnel";
+    Layout = "~/Views/Shared/_SOPLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>EDIT COMPETENT PERSONNEL</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Renewal" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" asp-for="PersonnelId" />
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <div class="md-form form-sm">
+                                                                    <input asp-for="PersonnelName" class="form-control" placeholder="Please type Personnel Name" style="font-size:13px;">
+                                                                    <label asp-for="PersonnelName" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Personnel Name</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="Icno" class="form-control" placeholder="Please type Personnel IC No." style="font-size:13px;">
+                                                                <label asp-for="Icno" class="control-label font-weight-bold" style="font-size: 18px;">IC No.</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div>
+                                                                <select asp-for="BusinessDiv"
+                                                                        class="mdb-select md-form form-sm colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessDiv ,"DivName", "DivName"))"
+                                                                        searchable="Search here"
+                                                                        size="5">
+                                                                </select>
+                                                                <label asp-for="BusinessDiv" class="mdb-main-label text-muted font-weight-bold text-left" for="RoleID" style="font-size: 14px;"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div>
+                                                                <select asp-for="BusinessUnit"
+                                                                        class="mdb-select md-form form-sm colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessUnit ,"UnitName", "UnitName"))"
+                                                                        searchable="Search here"
+                                                                        size="5">
+                                                                </select>
+                                                                <label asp-for="BusinessUnit" class="mdb-main-label text-muted font-weight-bold text-left" for="RoleID" style="font-size: 14px;"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RegNo" class="form-control" placeholder="Please type Registration No." style="font-size:13px;">
+                                                                <label asp-for="RegNo" class="control-label font-weight-bold" style="font-size: 18px;">Registration No.</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="YearAwarded" class="form-control" placeholder="Please type Year Awarded" style="font-size:13px;">
+                                                                <label asp-for="YearAwarded" class="control-label font-weight-bold" style="font-size: 18px;">Year Awarded</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="Branch" class="form-control" placeholder="Please type Branch" style="font-size:13px;">
+                                                                <label asp-for="Branch" class="control-label font-weight-bold" style="font-size: 18px;">Branch</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="AppointedDt" placeholder="Please select Appointment Date" type="text" class="form-control AppointDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="AppointedDt" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Appointment Date</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="ExpiredDt" placeholder="Please select Expire Date" type="text" class="form-control ExpiredDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="ExpiredDt" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Expired Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="card">
+                                        <div class="card-header cloudy-knoxville-gradient text-left ">
+                                            <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                Certificate Details
+                                            </span>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <select asp-for="CertFrom"
+                                                                class="mdb-select md-form form-sm colorful-select dropdown-primary"
+                                                                asp-items="@(new SelectList(@ViewBag.ListofCertBody ,"CertBodyName", "CertBodyName"))"
+                                                                searchable="Search here">
+                                                        </select>
+                                                        <label asp-for="CertFrom" class="mdb-main-label text-muted font-weight-bold text-left" for="RoleID" style="font-size: 14px;"><span style="color:red;">*</span> Certificate Body</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="md-form form-sm">
+                                                        <input asp-for="CertType" class="form-control" placeholder="Please type Certificate Type" style="font-size:13px;">
+                                                        <label asp-for="CertType" class="control-label font-weight-bold" style="font-size:18px;">Certificate Type</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="md-form form-sm">
+                                                        <input asp-for="CertNo" class="form-control" placeholder="Please type Certificate No." style="font-size:13px;">
+                                                        <label asp-for="CertNo" class="control-label font-weight-bold" style="font-size:18px;">Certificate No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="md-form form-sm">
+                                                        <input asp-for="CertFileName" class="form-control" placeholder="Please type Certificate File" style="font-size:13px;">
+                                                        <label asp-for="CertFileName" class="control-label font-weight-bold" style="font-size:18px;">Certificate File</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <input type="submit" value="Edit" asp-action="Renewal" class="btn btn-outline-dark dusty-grass-gradient waves-effect font-weight-bold" style="font-size:12px;" />
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CSS{
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 13px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+
+    <script src="~/mdb/js/mdb.js"></script>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.AppointDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $('.ExpiredDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

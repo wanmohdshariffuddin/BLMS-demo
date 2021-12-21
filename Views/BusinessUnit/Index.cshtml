@@ -1,0 +1,188 @@
+﻿@model IEnumerable<BLMS.Models.Admin.BusinessUnit>
+
+@{
+    ViewData["Title"] = "Business Unit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <!-- Grid row -->
+    <div class="row" style="margin-top: -100px;">
+        <!-- Grid column -->
+        <div class="col-md-12 px-lg-5">
+            <!-- Card -->
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>BUSINESS UNIT</strong>
+                        </h2>
+
+                        <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
+                            In this gridview, user can track Business Unit recorded in BLMS system.
+                        </p>
+
+                        <div class="row wow fadeIn" data-wow-delay="0.2s" style="font-size: 12px;">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="alert" class="form-group text-left" style="font-size: 14px;">
+                                            @Html.Raw(@ViewBag.Alert)
+                                        </div>
+
+                                        <table id="BusinessUnit" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-sm font-weight-bold col-1" style="font-size: 12px;">No.</th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.DivName)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.UnitName)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.HoCName)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold text-center col-2" style="font-size: 12px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int i = 1; }
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr id="row_@item.UnitName">
+                                                        <td class="text-sm text-center" style="font-size: 12px;">
+                                                            @i
+                                                        </td>
+                                                        <td class="text-sm" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.DivName)
+                                                        </td>
+                                                        <td class="text-sm" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.UnitName)
+                                                        </td>
+                                                        <td class="text-sm" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.HoCName)
+                                                        </td>
+                                                        <td class="text-center" style="font-size: 12px;">
+                                                            <a class="btn btn-outline-dark winter-neva-gradient btn-rounded btn-sm px-2" title="Edit" href="@Url.Action("Edit", "BusinessUnit", new {id=item.UnitID})" style="font-size: 12px;">
+                                                                <i class="fas fa-pencil-alt mt-0"></i>
+                                                            </a>
+                                                            <a class="btn btn-outline-dark young-passion-gradient btn-rounded btn-sm px-2" title="Delete" href="#" onclick="ConfirmDelete(@item.UnitID)" style="font-size: 12px;">
+                                                                <i class="fas fa-trash-alt mt-0"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <!--Delete bootstrap confirmation box-->
+                                        <div class="modal fade top" id="delete-conformation" aria-labelledby="delete-conformation" aria-hidden="true" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-frame modal-top modal-notify modal-danger">
+                                                <div class="modal-content">
+                                                    <div class="modal-header flex-column">
+                                                        <div class="icon-box">
+                                                            <i class="material-icons">&#xE5CD;</i>
+                                                        </div>
+                                                        <h4 class="modal-title w-100 font-weight-bolder text-center text-white">DELETE BUSINESS UNIT?</h4>
+                                                        <br />
+                                                        <p class="mb-1 align-self-sm-center text-white" style="color: red;"><i class="fas fa-exclamation-circle"></i> The saved data will be permanently deleted from BLMS database.</p>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn-outline-dark winter-neva-gradient waves-effect" data-dismiss="modal">Cancel</button>
+                                                        <a href="#" class="btn btn-outline-dark young-passion-gradient waves-effect" onclick="DeleteBusUnit()"><i class="far fa fa-eraser ml-1 text-black"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" id="hidUnitId" />
+
+                                        <a asp-action="Create" class="btn btn-outline-dark tempting-azure-gradient btn-block text-white text-sm font-weight-bold" style="font-size: 12px;">Create Business Unit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card -->
+        </div>
+        <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+</div>
+
+@section CSS{
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 12px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        var ConfirmDelete = function (UnitId) {
+
+            $("#hidUnitId").val(UnitId);
+            $("#delete-conformation").modal('show');
+        }
+
+        var DeleteBusUnit = function () {
+            var UnitId = $("#hidUnitId").val();
+
+            $.ajax({
+
+                type: "POST",
+                url: '@Url.Action("Delete", "BusinessUnit")',
+                dataType: "json",
+                data: { Id: UnitId },
+                success: function (result) {
+                    $("#delete-conformation").modal("hide");
+                    $("#row_" + UnitId).remove();
+                    window.location.href =  '@Url.Action("Index", "BusinessUnit")'
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            $('#BusinessUnit').DataTable();
+            $('#BusinessUnit_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#BusinessUnit_wrapper .dataTables_filter').find('input').each(function () {
+                $('input').attr("placeholder", "Search");
+                $('input').attr("style", 'font-size: 12px');
+                $('input').removeClass('form-control-sm');
+            });
+            $('#BusinessUnit_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#BusinessUnit_wrapper .dataTables_filter').addClass('md-form');
+            $('#BusinessUnit_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#BusinessUnit_wrapper select').addClass('mdb-select');
+            $('#BusinessUnit_wrapper .mdb-select').materialSelect();
+            $('#BusinessUnit_wrapper .dataTables_filter').find('label').remove();
+        });
+
+        //auto hide viewbag.alert
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#alert").fadeOut();
+            }, 3000);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,65 @@
+﻿@model BLMS.Models.Admin.CertBody
+
+@{
+    ViewData["Title"] = "Certificate Body";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>CREATE CERTIFICATE BODY</strong>
+                        </h2>
+
+                        <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
+                            Notes: Please fill the field to register new Certificate Body.
+                        </p>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Create" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="md-form form-sm">
+                                                <br />
+                                                <input asp-for="CertBodyName" class="form-control" placeholder="Please type Certificate Body" style="font-size: 14px;">
+                                                <label asp-for="CertBodyName" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Certificate Body</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <input type="submit" value="Create" class="btn btn-outline-dark dusty-grass-gradient waves-effect font-weight-bold" style="font-size: 12px;" />
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

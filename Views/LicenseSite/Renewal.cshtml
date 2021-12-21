@@ -1,0 +1,444 @@
+﻿@model BLMS.ViewModel.RenewalLicenseSiteViewModel
+
+@{
+    ViewData["Title"] = "Site User";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title text-muted font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>RENEWAL LICENSE</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Renewal" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" asp-for="RenewalLicense.LicenseID" />
+                                    <input type="hidden" asp-for="RenewalLicense.OldLicenseName" />
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.LicenseName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.LicenseName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> License Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.NewRegistrationNo" class="form-control" placeholder="Please type Registration No" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.NewRegistrationNo" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Registration No</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RenewalLicense.NewSerialNo" class="form-control" placeholder="Please type Serial No" style="font-size:13px;">
+                                                                <label asp-for="RenewalLicense.NewSerialNo" class="control-label font-weight-bold" style="font-size:18px;">Serial No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="RenewalLicense.CategoryID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofCategory,"CategoryID", "CategoryName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="RenewalLicense.CategoryName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> License Type</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <select id="ddlDivName" asp-for="RenewalLicense.DivID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessDiv,"DivID", "DivName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="RenewalLicense.DivName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <select id="ddlUnitName" asp-for="RenewalLicense.UnitID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessUnit,"UnitID", "UnitName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="RenewalLicense.UnitName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="RenewalLicense.NewIssuedDT" placeholder="Please select Issued Date" type="text" class="form-control IssuedDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="RenewalLicense.NewIssuedDT" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Issued Date</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="RenewalLicense.NewExpiredDT" placeholder="Please select Expire Date" type="text" class="form-control ExpiredDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="RenewalLicense.NewExpiredDT" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Expired Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Person in Charge (PIC)
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.RenewalLicense.PIC1Name))
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC1Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="RenewalLicense.PIC1Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="RenewalLicense.PIC1Name" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> PIC 1 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="RenewalLicense.PIC2Name"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofPIC2,"PIC2Name", "PIC2Name"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="RenewalLicense.PIC2Name" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID">PIC 2 Name (Optional)</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="RenewalLicense.PIC3Name"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofPIC3,"PIC3Name", "PIC3Name"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="RenewalLicense.PIC3Name" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID">PIC 3 Name (Optional)</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        File Attachment
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group form-sm text-left" action="#">
+                                                                <label class="control-label font-weight-bold text-muted text-sm" style="font-size: 14px;"><span style="color:red;">*</span> License File</label>
+                                                                <div class="custom-file mb-3">
+                                                                    <input type="file" class="custom-file-input" name="LicenseFile" style="font-size: 13px;">
+                                                                    <label class="custom-file-label" for="customFile" style="font-size: 13px;">Choose license file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Remarks
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <textarea asp-for="RenewalLicense.NewRemarks" rows="3" class="md-textarea form-control" placeholder="Please type Remarks" style="font-size:13px;"></textarea>
+                                                                <label asp-for="RenewalLicense.NewRemarks" class="control-label font-weight-bold" style="font-size:18px;">Remarks</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        History Log
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div>
+                                                                <table id="LicenseHQ" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                                                    <!-- Table head -->
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-sm font-weight-bold col-1 text-center" style="font-size: 12px;">
+                                                                                No.
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                License Name
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Registration No
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Serial No
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Person In Charge
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                                                Issued & Expired Date
+                                                                            </th>
+                                                                            <th class="text-sm font-weight-bold text-center col-1" style="font-size: 12px;">File</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <!-- Table head -->
+                                                                    <!-- Table body -->
+                                                                    <tbody>
+                                                                        @foreach (var item in Model.History)
+                                                                        {
+                                                                            <tr>
+                                                                                @*Index No*@
+                                                                                <td class="text-sm text-center" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.IndexNo)
+                                                                                </td>
+                                                                                @*Unit Name*@
+                                                                                <td class="text-sm col-3" style="font-size: 12px;">
+                                                                                    <span>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryLicenseName)
+
+                                                                                        <br />
+
+                                                                                        @if (item.HistoryisRegistered == true)
+                                                                                        {
+                                                                                            <span class="badge bg-success text-sm">Registered</span>
+                                                                                        }
+                                                                                        else if (item.HistoryisRenewed == true)
+                                                                                        {
+                                                                                            <span class="badge bg-secondary text-sm">Renewed</span>
+                                                                                        }
+
+                                                                                        @*expired badge*@
+                                                                                        @if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 0)
+                                                                                        {
+                                                                                            <span class="badge bg-danger text-sm">Expired</span>
+                                                                                        }
+                                                                                        else if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 90)
+                                                                                        {
+                                                                                            <span class="badge bg-warning text-sm">Expiring</span>
+                                                                                        }
+                                                                                    </span>
+                                                                                </td>
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.HistoryRegistrationNo)
+                                                                                </td>
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @Html.DisplayFor(modelItem => item.HistorySerialNo)
+                                                                                </td>
+                                                                                @*Person In Charge*@
+                                                                                <td class="text-sm col-2" style="font-size: 12px;">
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryPIC1Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 1:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC1Name)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (string.IsNullOrEmpty(item.HistoryPIC2Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 2:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC2Name)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryPIC3Name))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">PIC 3:</label>
+                                                                                        <br />
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryPIC3Name)
+                                                                                    }
+                                                                                </td>
+                                                                                @*IssuedDT & ExpiredDT*@
+                                                                                <td class="text-sm text-center col-2" style="font-size: 12px;">
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryIssuedDT))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">Issued Date:</label>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryIssuedDT)
+                                                                                        <br /><br />
+                                                                                    }
+
+                                                                                    @if (!string.IsNullOrEmpty(item.HistoryExpiredDT))
+                                                                                    {
+                                                                                        <label class="font-weight-bold">Expired Date:</label>
+                                                                                        @Html.DisplayFor(modelItem => item.HistoryExpiredDT)
+                                                                                    }
+                                                                                </td>
+                                                                                @*Download File*@
+                                                                                <td class="text-center col-1" style="font-size: 12px;">
+                                                                                    @if (item.HistoryhasFile == true)
+                                                                                    {
+                                                                                        <a class="btn btn-outline-dark heavy-rain-gradient btn-rounded btn-sm px-2" title="Download License File" href="@Url.Action("DownloadLicenseFile", "LicenseAdmin", new {id=item.HistoryLicenseID})">
+                                                                                            <i class="fas fa-download mt-0"></i>
+                                                                                        </a>
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                    <!-- Table body -->
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <input type="submit" value="Renew" asp-action="Renewal" class="btn btn-outline-dark dusty-grass-gradient font-weight-bold waves-effect" style="font-size:12px;" />
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CSS{
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 13px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+}
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+
+        $('.IssuedDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $('.ExpiredDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $(function () {
+            $("#ddlDivName").change(function () {
+                $.getJSON('@Url.Content("~/LicenseAdmin/JSONGetUnitName")', { DivID: $("#ddlDivName").val() }, function (d) {
+                    var row = "";
+                    $("#ddlUnitName").empty();
+                    items = "<option value='0'>Please select Business Unit</option>";
+                    $.each(d, function (i, item) {
+                        items += "<option value=" + item.value + ">" + item.text + "</option>";
+                    });
+                    $("#ddlUnitName").html(items);
+                })
+            })
+        });
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,143 @@
+﻿@model BLMS.Models.User
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<section class="section team-section">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row text-center">
+
+            <!-- Grid column -->
+            <div class="col-md-8 mb-4">
+
+                <!-- Card -->
+                <div class="card card-cascade cascading-admin-card user-card">
+
+                    <!-- Card Data -->
+                    <div class="admin-up d-flex justify-content-start">
+                        <i class="fas fa-users info-color py-4 mr-3 z-depth-2"></i>
+                        <div class="data">
+                            <h5 class="font-weight-bold dark-grey-text">
+                                My Profile
+                            </h5>
+                        </div>
+                    </div>
+                    <!-- Card Data -->
+                    <!-- Card content -->
+                    <div class="card-body card-body-cascade">
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mb-0">
+                                    <input type="text" id="form5" class="form-control disabled" value="@User.Identity.Name">
+                                    <label for="form5" class="">Staff Name</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mb-0">
+                                    <input type="text" id="form6" class="form-control disabled" value="@Model.STAFF_NO">
+                                    <label for="form6" class="">Staff No</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-12">
+                                <div class="md-form form-sm mb-0">
+                                    <input type="text" id="form6" class="form-control disabled" value="@Model.STAFF_EMAIL">
+                                    <label for="form6" class="">Staff Email</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                        <!-- Grid row -->
+                        <div class="row">
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mb-0">
+                                    <input type="text" id="form6" class="form-control disabled" value="@Model.ROLE">
+                                    <label for="form6" class="">Staff Role</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                            <!-- Grid column -->
+                            <div class="col-md-6">
+                                <div class="md-form form-sm mb-0">
+                                    <input type="text" id="form6" class="form-control disabled" value="@Model.ACCESS_LEVEL">
+                                    <label for="form6" class="">Access Level</label>
+                                </div>
+                            </div>
+                            <!-- Grid column -->
+                        </div>
+                        <!-- Grid row -->
+                    </div>
+                    <!-- Card content -->
+                </div>
+                <!-- Card -->
+            </div>
+            <div class="col-md-4 mb-4">
+                <!-- Card -->
+                <div class="card profile-card">
+                    <!-- Avatar -->
+                    <div class="avatar z-depth-1-half mb-4">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="rounded-circle" alt="First sample avatar image">
+                    </div>
+                    <div class="card-body pt-0 mt-0">
+                        <!-- Name -->
+                        <h3 class="mb-3 font-weight-bold"><strong>@User.Identity.Name</strong></h3>
+                        <h6 class="font-weight-bold cyan-text mb-4">@Model.ROLE</h6>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!-- Grid column -->
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div>
+                    @using (Html.BeginForm("LoginUser", "Home", FormMethod.Post, new { role = "form" }))
+                    {
+                        <div>
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <label>EMAIL</label><br />
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.STAFF_EMAIL, new { @class = "form-control txtbox" })
+                            </div>
+                        </div>
+                        <div style="padding-left:35%;width:40%;">
+                            <div style="padding-top:20px;">
+                                <input class="btn btn-primary btn-lg rph-login-button" type="submit" value="Login" id="login" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#login").trigger('click');
+        });
+    </script>
+}

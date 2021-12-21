@@ -1,0 +1,268 @@
+﻿@model BLMS.ViewModel.AuditErrorViewModel
+
+@{
+    ViewData["Title"] = "Audit & Error Log";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <!-- Grid row -->
+    <div class="row" style="margin-top: -100px;">
+        <!-- Grid column -->
+        <div class="col-md-12 px-lg-5">
+            <!-- Card -->
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>AUDIT AND ERROR LOG</strong>
+                        </h2>
+
+                        <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
+                            In this gridview, user can track Audit and Error Log recorded in BLMS system.
+                        </p>
+
+                        <div class="row wow fadeIn" data-wow-delay="0.2s" style="font-size: 12px;">
+                            <div class="col-12">
+                                <ul class="nav nav-tabs cloudy-knoxville-gradient md-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link active text-dark font-weight-bold" id="audit-tab" data-toggle="tab" href="#auditlog" role="tab" aria-controls="auditlog" aria-selected="false">Audit Log</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link text-dark font-weight-bold" id="error-tab" data-toggle="tab" href="#errorlog" role="tab" aria-controls="errorlog" aria-selected="false">Error Log</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content card pt-5" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="auditlog" role="tabpanel" aria-labelledby="audit-tab">
+                                        <table id="AuditLog" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-sm font-weight-bold col-md-1" style="font-size: 12px;">
+                                                        No.
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].Command)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].SPName)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].ScreenPath)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].OldValue)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].NewValue)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].CreatedBy)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.auditLog[0].CreatedDt)
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @{
+                                                    int i = 1;
+
+                                                    foreach (var item in Model.auditLog)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @i
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.Command)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.SPName)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.ScreenPath)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.OldValue)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.NewValue)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.CreatedDt)
+                                                            </td>
+                                                        </tr>
+
+                                                        i++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="errorlog" role="tabpanel" aria-labelledby="error-tab">
+                                        <table id="ErrorLog" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-sm font-weight-bold col-md-1" style="font-size: 12px;">
+                                                        No.
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].PageName)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].ErrorMessage)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].Method)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].LineNumber)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].CreatedBy)
+                                                    </th>
+
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.errorLog[0].CreatedDt)
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    int i2 = 1;
+
+                                                    foreach (var item in Model.errorLog)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @i2
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.PageName)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.ErrorMessage)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.Method)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.LineNumber)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                                                            </td>
+
+                                                            <td class="text-sm" style="font-size: 12px;">
+                                                                @Html.DisplayFor(modelItem => item.CreatedDt)
+                                                            </td>
+                                                        </tr>
+
+                                                        i2++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section CSS{
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+        <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+        <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+
+        <style>
+            .select-wrapper input.select-dropdown {
+                font-size: 12px;
+            }
+
+            .dropdown-content li > span {
+                font-size: 12px;
+            }
+        </style>
+    }
+
+    @section Scripts {
+        <script>
+            new WOW().init();
+
+            $(document).ready(function () {
+                $('#AuditLog').DataTable();
+                $('#AuditLog_wrapper').find('label').each(function () {
+                    $(this).parent().append($(this).children());
+                });
+                $('#AuditLog_wrapper .dataTables_filter').find('input').each(function () {
+                    $('input').attr("placeholder", "Search");
+                    $('input').attr("style", 'font-size: 12px');
+                    $('input').removeClass('form-control-sm');
+                });
+                $('#AuditLog_wrapper .dataTables_length').addClass('d-flex flex-row');
+                $('#AuditLog_wrapper .dataTables_filter').addClass('md-form');
+                $('#AuditLog_wrapper select').removeClass(
+                    'custom-select custom-select-sm form-control form-control-sm');
+                $('#AuditLog_wrapper select').addClass('mdb-select');
+                $('#AuditLog_wrapper .mdb-select').materialSelect();
+                $('#AuditLog_wrapper .dataTables_filter').find('label').remove();
+            });
+
+            $(document).ready(function () {
+                $('#ErrorLog').DataTable();
+                $('#ErrorLog_wrapper').find('label').each(function () {
+                    $(this).parent().append($(this).children());
+                });
+                $('#ErrorLog_wrapper .dataTables_filter').find('input').each(function () {
+                    $('input').attr("placeholder", "Search");
+                    $('input').attr("style", 'font-size: 12px');
+                    $('input').removeClass('form-control-sm');
+                });
+                $('#ErrorLog_wrapper .dataTables_length').addClass('d-flex flex-row');
+                $('#ErrorLog_wrapper .dataTables_filter').addClass('md-form');
+                $('#ErrorLog_wrapper select').removeClass(
+                    'custom-select custom-select-sm form-control form-control-sm');
+                $('#ErrorLog_wrapper select').addClass('mdb-select');
+                $('#ErrorLog_wrapper .mdb-select').materialSelect();
+                $('#ErrorLog_wrapper .dataTables_filter').find('label').remove();
+            });
+        </script>
+
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

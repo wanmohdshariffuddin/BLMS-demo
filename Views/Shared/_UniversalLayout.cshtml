@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]</title>
+    <link href="~/fontawesome/all.css" rel="stylesheet" />
+    <link href="~/mdb/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/mdb/css/mdb.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+
+    <link href="~/css/AllUser.css" rel="stylesheet" />
+</head>
+<body class="white-skin">
+    <!-- Main Navigation -->
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-dn mr-auto font-weight-bold">
+                <p>BLMS</p>
+            </div>
+        </nav>
+        <!-- Navbar -->
+        <!-- Intro Section -->
+        <section class="view intro-4" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');
+        background-repeat: no-repeat; background-size: cover;" id="home">
+            <div class="mask rgba-indigo-light">
+                <div class="container h-100 d-flex justify-content-center align-items-center">
+                    <div class="row flex-center pt-5 mt-3">
+                        <div class="col-md-12 col-lg-12 text-center">
+                            <h1 class="display-4 mt-md-5 mt-lg-0 mb-4 font-weight-bold white-text wow fadeIn" data-wow-delay="0.3s">
+                                <strong>WELCOME TO BLMS</strong>
+                            </h1>
+                            <hr class="hr-light wow fadeIn" data-wow-delay="0.3s">
+                            <h5 class="white-text description wow fadeIn" data-wow-delay="0.3s">
+                                Business License Management System
+                            </h5>
+                            <br /><br />
+                            <a class="btn btn-white btn-rounded btn-lg orange-text font-weight-bold ml-lg-0 wow fadeIn"
+                               data-wow-delay="0.3s" data-offset="100" href="#license">
+                               Go to license listing
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer text-center text-md-left unique-color-dark pt-0 mt-0">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            <div class="container-fluid">
+                © 2021 Copyright: <a href="https://www.uemedgenta.com/" target="_blank">UEM Edgenta Berhad </a>
+            </div>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+    <script src="~/mdb/js/jquery-3.4.1.min.js"></script>
+    <script src="~/mdb/js/popper.min.js"></script>
+    <script src="~/mdb/js/bootstrap.js"></script>
+    <script src="~/mdb/js/mdb.min.js"></script>
+    <script src="~/mdb/js/addons/datatables.min.js"></script>
+    <script src="~/mdb/js/addons/datatables-select.min.js"></script>
+
+    <script>
+        // Animation init
+        new WOW().init();
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("CSS", required: false)
+</body>
+</html>

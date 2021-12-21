@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]</title>
+    <link href="~/fontawesome/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/mdb/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/mdb.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/style.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/css/Register.css" rel="stylesheet" />
+
+    <style>
+        li {
+            font-size: 0.95rem;
+            line-height: 1.5rem;
+        }
+    </style>
+</head>
+<body class="white-skin">
+    <!-- Main Navigation -->
+    <header>
+        <!-- Sidebar navigation -->
+        <div id="slide-out" class="side-nav sn-bg-4 fixed">
+            <ul class="custom-scrollbar">
+                <!-- Logo -->
+                <li class="logo-sn waves-effect py-4">
+                    <div class="text-center">
+                        <img src="~/img/BLMS-no-bg.png" class="pl-0" style="height: 130px" />
+                    </div>
+                </li>
+
+                <!-- Side navigation links -->
+                <li>
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a href="@Url.Action("Index", "Dashboard")" class="collapsible-header waves-effect font-weight-bold">
+                                <i class="w-fa fas fa-tachometer-alt"></i>BLMS Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                <i class="w-fa fas fa-building"></i>HQ User<i class="fas fa-angle-down rotate-icon"></i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="@Url.Action("Index", "LicenseHQ")" class="waves-effect font-weight-bold">License Listing</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("RequestLicense", "LicenseHQ")" class="waves-effect font-weight-bold">License Request</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                <i class="w-fa fas fa-industry"></i>Site User<i class="fas fa-angle-down rotate-icon"></i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="@Url.Action("Index", "LicenseSite")" class="waves-effect font-weight-bold">License Listing</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Register", "LicenseSite")" class="waves-effect font-weight-bold">License Register</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="http://10.49.45.41/Reports/browse/BLMS" target="_blank" class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                <i class="w-fa fab fa fa-chart-bar"></i>Reporting
+                            </a>
+                        </li>
+                        <li>
+                            <a class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                <i class="w-fa fas fa-book"></i>Supporting Documents<i class="fas fa-angle-down rotate-icon"></i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li hidden>
+                                        <a href="@Url.Action("Index", "SOP")" class="waves-effect font-weight-bold">SOP's & Guidelines</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "Authority")" class="waves-effect font-weight-bold">Authority Link</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "CompetentPersonnel")" class="waves-effect font-weight-bold">Competent Personnel</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                <i class="w-fa fas fa-user"></i>Administration Module<i class="fas fa-angle-down rotate-icon"></i>
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <ul class="collapsible collapsible-accordion mt-0">
+                                            <li>
+                                                <a class="collapsible-header waves-effect arrow-r font-weight-bold">
+                                                    <i class="w-fa fas fa fa-registered"></i>Registration<i class="fas fa-angle-down rotate-icon"></i>
+                                                </a>
+                                                <div class="collapsible-body">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "BusinessDiv")" class="waves-effect font-weight-bold">Business Division</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "BusinessUnit")" class="waves-effect font-weight-bold">Business Unit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "CertBody")" class="waves-effect font-weight-bold">Certificate Body</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "Category")" class="waves-effect font-weight-bold">License Type</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "PIC")" class="waves-effect font-weight-bold">Person in Charge</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "UserRole")" class="waves-effect font-weight-bold">User Role</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "LicenseAdmin")" class="waves-effect font-weight-bold"><i class="w-fa fas fa fa-chart-line"></i>Application Tracking</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "LicenseApproval")" class="waves-effect font-weight-bold"><i class="w-fa fas fa fa-check-double"></i>License Approval</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "Log")" class="waves-effect font-weight-bold"><i class="w-fa fas fa fa-list-alt"></i>Audit & Error Log</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Side navigation links -->
+            </ul>
+            <div class="sidenav-bg mask-strong"></div>
+        </div>
+        <!-- Sidebar navigation -->
+        <!-- Navbar -->
+        <nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav">
+            <!-- SideNav slide-out button -->
+            <div class="float-left">
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
+            </div>
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-dn mr-auto font-weight-bold">
+                <p>BLMS</p>
+            </div>
+
+            <!-- Navbar links -->
+            <ul class="nav navbar-nav nav-flex-icons ml-auto">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect" href="#" id="userDropdown" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span class="clearfix d-none d-sm-inline-block font-weight-bold">@User.Identity.Name @ViewBag.UserRole </span>
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0"
+                             alt="avatar image" height="25">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Navbar links -->
+        </nav>
+        <!-- Navbar -->
+
+        <section class="view intro-4" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');
+        background-repeat: no-repeat; background-size: cover;" id="home">
+            <div class="mask rgba-indigo-light">
+                <div class="container h-100 d-flex justify-content-center align-items-center">
+                    <div class="row flex-center pt-5 mt-3">
+                        <div class="col-md-12 col-lg-12 text-center">
+                            <h1 class="display-4 mt-md-5 mt-lg-0 mb-4 font-weight-bold white-text wow fadeIn" data-wow-delay="0.3s">
+                                <strong>SITE USER</strong>
+                            </h1>
+                            <hr class="hr-light wow fadeIn" data-wow-delay="0.3s">
+                            <h5 class="white-text description wow fadeIn" data-wow-delay="0.3s">
+                                Business License Management System
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer text-center text-md-left unique-color-dark pt-0 mt-0">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            <div class="container-fluid">
+                © 2021 Copyright: <a href="https://www.uemedgenta.com/" target="_blank">UEM Edgenta Berhad </a>
+            </div>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+    <script src="~/mdb/js/jquery-3.4.1.min.js"></script>
+    <script src="~/mdb/js/popper.min.js"></script>
+    <script src="~/mdb/js/bootstrap.min.js"></script>
+    <script src="~/mdb/js/mdb.min.js"></script>
+    <script src="~/mdb/js/addons/datatables.min.js"></script>
+    <script src="~/mdb/js/addons/datatables-select.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap-datepicker.js"></script>
+    <script src="~/mdb/js/modules/picker-date.js"></script>
+    <script src="~/mdb/js/modules/picker-time.js"></script>
+    <script src="~/mdb/js/modules/picker.js"></script>
+
+    <script>
+        // Animation init
+        new WOW().init();
+
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+        var container = document.querySelector('.custom-scrollbar');
+        var ps = new PerfectScrollbar(container, {
+            wheelSpeed: 2,
+            wheelPropagation: true,
+            minScrollbarLength: 20
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("CSS", required: false)
+</body>
+</html>

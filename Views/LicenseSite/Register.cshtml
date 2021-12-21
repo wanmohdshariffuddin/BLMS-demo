@@ -1,0 +1,290 @@
+﻿@model BLMS.Models.License.LicenseSite
+
+@{
+    ViewData["Title"] = "Site User";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title text-muted font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>REGISTER LICENSE</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Register" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="LicenseName" class="form-control" placeholder="Please type License Name" style="font-size:13px;">
+                                                                <label asp-for="LicenseName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> License Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RegistrationNo" class="form-control" placeholder="Please type Registration No" style="font-size:13px;">
+                                                                <label asp-for="RegistrationNo" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Registration No</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="SerialNo" class="form-control" placeholder="Please type Serial No" style="font-size:13px;">
+                                                                <label asp-for="SerialNo" class="control-label font-weight-bold" style="font-size:18px;">Serial No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="CategoryID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofCategory,"CategoryID", "CategoryName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="CategoryName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> License Type</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <select id="ddlDivName" asp-for="DivID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessDiv,"DivID", "DivName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="DivName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <select id="ddlUnitName" asp-for="UnitID"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofBusinessUnit,"UnitID", "UnitName"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="UnitName" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="IssuedDT" placeholder="Please select Issued Date" type="text" class="form-control IssuedDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="IssuedDT" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Issued Date</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="ExpiredDT" placeholder="Please select Expire Date" type="text" class="form-control ExpiredDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="ExpiredDT" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Expired Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Person in Charge (PIC)
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="PIC1Name" class="form-control" value="@User.Identity.Name" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="PIC1Name" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> PIC 1 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="PIC2StaffNo"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofPIC2,"PIC2StaffNo", "PIC2Name"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="PIC2Name" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID">PIC 2 Name (Optional)</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                <select asp-for="PIC3StaffNo"
+                                                                        class="mdb-select md-form colorful-select dropdown-primary"
+                                                                        asp-items="@(new SelectList(@ViewBag.ListofPIC3,"PIC3StaffNo", "PIC3Name"))"
+                                                                        searchable="Search here"
+                                                                        size="4">
+                                                                </select>
+                                                                <label asp-for="PIC3Name" class="mdb-main-label font-weight-bold text-muted text-left" style="font-size: 14px;" for="RoleID">PIC 3 Name (Optional)</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        File Attachment
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group form-sm text-left" action="#">
+                                                                <label class="control-label font-weight-bold text-muted text-sm" style="font-size: 14px;"><span style="color:red;">*</span> License File</label>
+                                                                <div class="custom-file mb-3">
+                                                                    <input type="file" class="custom-file-input" name="LicenseFile" style="font-size: 13px;">
+                                                                    <label class="custom-file-label" for="customFile" style="font-size: 13px;">Choose license file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Remarks
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm mb-0">
+                                                                <textarea asp-for="Remarks" rows="3" class="md-textarea form-control" placeholder="Please type Remarks" style="font-size:13px;"></textarea>
+                                                                <label asp-for="Remarks" class="control-label font-weight-bold" style="font-size:18px;">Remarks</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <input type="submit" value="Register" asp-action="Register" class="btn btn-outline-dark dusty-grass-gradient font-weight-bold waves-effect" style="font-size:12px;" />
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CSS{
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 13px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+}
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+
+        $('.IssuedDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $('.ExpiredDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $(function () {
+            $("#ddlDivName").change(function () {
+                $.getJSON('@Url.Content("~/LicenseSite/JSONGetUnitName")', { DivID: $("#ddlDivName").val() }, function (d) {
+                    var row = "";
+                    $("#ddlUnitName").empty();
+                    items = "<option value='0'>Please select Business Unit</option>";
+                    $.each(d, function (i, item) {
+                        items += "<option value=" + item.value + ">" + item.text + "</option>";
+                    });
+                    $("#ddlUnitName").html(items);
+                })
+            })
+        });
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

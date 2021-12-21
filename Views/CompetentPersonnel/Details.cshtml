@@ -1,0 +1,245 @@
+﻿@model BLMS.Models.SOP.PageCompetentPersonnel
+
+@{
+    ViewData["Title"] = "Competent Personnel";
+    Layout = "~/Views/Shared/_SOPLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>COMPETENT PERSONNEL DETAILS</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Create" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.PersonnelName" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.PersonnelName" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.CompetentPersonnel.Icno))
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.Icno" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.Icno" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <label asp-for="CompetentPersonnel.Icno" class="control-label font-weight-bold" style="font-size: 18px;">IC No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.BusinessDiv" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.BusinessDiv" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.BusinessUnit" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.BusinessDiv" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.CompetentPersonnel.RegNo))
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.RegNo" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.RegNo" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <label asp-for="CompetentPersonnel.RegNo" class="control-label font-weight-bold" style="font-size: 18px;">Registration No.</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form form-sm">
+                                                                @if (Model.CompetentPersonnel.YearAwarded == null)
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.YearAwarded" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.YearAwarded" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <label asp-for="CompetentPersonnel.YearAwarded" class="control-label font-weight-bold" style="font-size: 18px;">Year Awarded</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.CompetentPersonnel.Branch))
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.Branch" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.Branch" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <label asp-for="CompetentPersonnel.Branch" class="control-label font-weight-bold" style="font-size: 18px;">Branch</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                @if (Model.CompetentPersonnel.AppointedDt == null)
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.AppointedDt" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.AppointedDt" type="text" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br />
+                                                                <label asp-for="CompetentPersonnel.AppointedDt" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Appointment Date</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                @if (Model.CompetentPersonnel.ExpiredDt == null)
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.ExpiredDt" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.ExpiredDt" type="text" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                }
+
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br />
+                                                                <label asp-for="CompetentPersonnel.ExpiredDt" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Expired Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Certificate Details
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.CertFrom" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.CertFrom" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Certificate Body</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.CertType" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.CertType" class="control-label font-weight-bold" style="font-size:18px;">Certificate Type</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CompetentPersonnel.CertNo" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                <label asp-for="CompetentPersonnel.CertNo" class="control-label font-weight-bold" style="font-size:18px;">Certificate No</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                @if (Model.CompetentPersonnel.CertFileName == null)
+                                                                {
+                                                                    <input asp-for="CompetentPersonnel.CertFileName" value="Not available" class="form-control" onkeydown="return false" style="font-size:12px;">
+                                                                    <label asp-for="CompetentPersonnel.CertFileName" class="control-label font-weight-bold" style="font-size:18px;">Certificate File</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label asp-for="CompetentPersonnel.CertNo" class="control-label text-muted font-weight-bold" style="font-size:18px;">Certificate File</label>
+                                                                    <input type="text" class="form-control" asp-for="CompetentPersonnel.CertFileName" onkeydown="return false" style="font-size: 12px;">
+                                                                    <div class="input-group-prepend">
+                                                                        <a class="input-group-text" href="@Html.DisplayFor(modelItem => Model.CompetentPersonnel.CertFileName)" target="_blank" style="font-size: 12px;">Open Link</a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

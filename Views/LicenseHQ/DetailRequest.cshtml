@@ -1,0 +1,244 @@
+﻿@model BLMS.Models.License.LicenseHQ
+
+@{
+    ViewData["Title"] = "HQ User";
+    Layout = "~/Views/Shared/_HQLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title text-muted font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>LICENSE DETAILS</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Create" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                @if (Model.isRequested == true)
+                                                {
+                                                    <div class="card-header winter-neva-gradient text-left" style="font-size: 14px;">
+                                                        <strong><i class="far fa fa-fist-raised ml-1"></i> This license has been requested and waiting for approval.</strong>
+                                                    </div>
+                                                }
+                                                else if (Model.isApproved == true)
+                                                {
+                                                    <div class="card-header sunny-morning-gradient text-left" style="font-size: 14px;">
+                                                        <strong><i class="far fa fa-check-circle ml-1 text-black"></i> This license has been approved and waiting Administrator to register the license.</strong>
+                                                    </div>
+                                                }
+                                                else if (Model.isRejected == true)
+                                                {
+                                                    <div class="card-header young-passion-gradient text-left" style="font-size: 14px;">
+                                                        <strong><i class="far fa fa-window-close ml-1 text-black"></i> This license has been rejected!</strong>
+                                                        <br />
+                                                        <strong>Reason: </strong><span>@Html.DisplayFor(modelItem => Model.RejectionRemarks)</span>
+                                                    </div>
+                                                }
+
+                                                <div class="heavy-rain-gradient">
+                                                    <ul class="stepper stepper-horizontal">
+                                                        <li class="completed">
+                                                            <a href="#!">
+                                                                <span class="circle"><i class="fas fa-check mt-0"></i></span>
+                                                                <span class="label">Requested</span>
+                                                            </a>
+                                                        </li>
+
+                                                        @if (Model.isApproved == true)
+                                                        {
+                                                            <li class="completed">
+                                                                <a href="#!">
+                                                                    <span class="circle"><i class="fas fa-check mt-0"></i></span>
+                                                                    <span class="label">Approved</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        else if (Model.isRejected == true)
+                                                        {
+                                                            <li class="warning">
+                                                                <a href="#!">
+                                                                    <span class="circle"><i class="fas fa-exclamation mt-0"></i></span>
+                                                                    <span class="font-weight-bold text-black">Rejected</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li>
+                                                                <a href="#!">
+                                                                    <span class="circle">2</span>
+                                                                    <span class="label">Approved</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        License Details
+                                                    </span>
+                                                </div>
+
+                                                <input type="hidden" asp-for="LicenseID" />
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="LicenseName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="LicenseName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> License Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CategoryName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="CategoryName" class="control-label font-weight-bold" style="font-size:18px;">License Type</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="DivName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="DivName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Business Division</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="UnitName" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                <label asp-for="UnitName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Business Unit</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Person in Charge (PIC)
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.PIC1Name))
+                                                                {
+                                                                    <input asp-for="PIC1Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="PIC1Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="PIC1Name" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> PIC 1 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.PIC2Name))
+                                                                {
+                                                                    <input asp-for="PIC2Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="PIC2Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="PIC2Name" class="control-label font-weight-bold" style="font-size:18px;">PIC 2 Name</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.PIC3Name))
+                                                                {
+                                                                    <input asp-for="PIC3Name" type="text" value="-" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input asp-for="PIC3Name" type="text" class="form-control" onkeydown="return false" style="font-size:13px;">
+                                                                }
+
+                                                                <label asp-for="PIC3Name" class="control-label font-weight-bold" style="font-size:18px;">PIC 3 Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Remarks
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                @if (string.IsNullOrEmpty(Model.Remarks))
+                                                                {
+                                                                    <textarea asp-for="Remarks" rows="3" placeholder="-" class="md-textarea form-control" onkeydown="return false" style="font-size:13px;"></textarea>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <textarea asp-for="Remarks" rows="3" class="md-textarea form-control" onkeydown="return false" style="font-size:13px;"></textarea>
+                                                                }
+
+                                                                <label asp-for="Remarks" class="control-label font-weight-bold" style="font-size:18px;">Remarks</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

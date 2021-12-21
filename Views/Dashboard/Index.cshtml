@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewData["Title"] = "BLMS Dashboard";
+}
+
+<section id="dashboard" class="section text-center my-5">
+    <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+        <strong>LICENSE DASHBOARD</strong>
+    </h2>
+
+    <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
+        In this dashboard, user can view the track of recorded license, analysis report and other informations in one GUI screen.
+    </p>
+
+    <div class="row wow fadeIn" data-wow-delay="0.2s" style="font-size: 12px;">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="iframe-container">
+                        <iframe src="https://app.powerbi.com/view?r=eyJrIjoiY2I2YzhlMDUtNjMwOC00MTdjLWIyODQtYzFjZjNlNmFmYzE2IiwidCI6IjI5YTgwM2ViLWU3YjktNGMwZi04NGJmLTBiZGM1Y2UwMjg4OCIsImMiOjEwfQ%3D%3D"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section CSS{
+    <link href="~/css/iFrame.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+}
+
+@section Scripts {
+    <script>
+        new WOW().init();
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

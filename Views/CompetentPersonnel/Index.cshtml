@@ -1,0 +1,197 @@
+﻿@model IEnumerable<BLMS.Models.SOP.CompetentPersonnel>
+
+@{
+    ViewData["Title"] = "Competent Personnel";
+    Layout = "~/Views/Shared/_SOPLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <!-- Grid row -->
+    <div class="row" style="margin-top: -100px;">
+        <!-- Grid column -->
+        <div class="col-md-12 px-lg-5">
+            <!-- Card -->
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>COMPETENT PERSONNEL</strong>
+                        </h2>
+
+                        <div class="row wow fadeIn" data-wow-delay="0.2s" style="font-size: 12px;">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="alert" class="form-group text-left" style="font-size: 14px;">
+                                            @Html.Raw(@ViewBag.Alert)
+                                        </div>
+
+                                        <table id="Competent" class="table table-hover table-wrapper table-striped table-responsive-lg text-left" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-sm font-weight-bold col-1" style="font-size: 12px;">No.</th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.BusinessUnit)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.PersonnelName)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.CertFrom)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.CertType)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        Date
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.YearAwarded)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold" style="font-size: 12px;">
+                                                        @Html.DisplayNameFor(model => model.CertFileName)
+                                                    </th>
+                                                    <th class="text-sm font-weight-bold text-center col-2" style="font-size: 12px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int i = 1; }
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr id="row_@item.PersonnelId">
+                                                        <td class="text-sm text-center" style="font-size: 12px;">
+                                                            @i
+                                                        </td>
+                                                        <td class="text-sm col-2" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.BusinessUnit)
+                                                        </td>
+                                                        <td class="text-sm col-2" style="font-size: 12px;">
+                                                            <a title="Click here to view details" href="@Url.Action("Details", "CompetentPersonnel", new {id=item.PersonnelId})">
+                                                                <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.PersonnelName)</span>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-sm col-2" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.CertFrom)
+                                                        </td>
+                                                        <td class="text-sm col-2" style="font-size: 12px;">
+                                                            @Html.DisplayFor(modelItem => item.CertType)
+                                                        </td>
+                                                        <td class="text-sm col-2" style="font-size: 12px;">
+                                                            @if (item.AppointedDt.HasValue)
+                                                            {
+                                                                <label class="font-weight-bold">Appointment Date:</label>
+                                                                <br />
+                                                                @Html.DisplayFor(modelItem => item.AppointedDt)
+
+                                                                <br /><br />
+                                                            }
+
+                                                            @if (item.ExpiredDt.HasValue)
+                                                            {
+                                                                <label class="font-weight-bold">Expired Date:</label>
+                                                                <br />
+                                                                @Html.DisplayFor(modelItem => item.ExpiredDt)
+                                                            }
+
+                                                            @if (item.AppointedDt == null && item.ExpiredDt == null)
+                                                            {
+                                                                <i class="text-sm font-italic" style="font-size: 12px;">No date</i>
+                                                            }
+                                                        </td>
+                                                        <td class="text-sm text-center" style="font-size: 12px;">
+                                                            @if (item.YearAwarded != null)
+                                                            {
+                                                                @Html.DisplayFor(modelItem => item.YearAwarded)
+                                                            }
+                                                            else
+                                                            {
+                                                            <i class="text-sm" style="font-size: 12px;">-</i>
+                                                            }
+                                                        </td>
+                                                        <td class="text-sm text-center col-1" style="font-size: 12px;">
+                                                            @{
+                                                                if (item.CertFileName == null)
+                                                                {
+                                                                    <i class="text-sm font-italic" style="font-size: 12px;">Not available</i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="btn btn-outline-dark heavy-rain-gradient btn-rounded btn-sm px-2" title="Open certificate link" href="@Html.DisplayFor(modelItem => item.CertFileName)" target="_blank">
+                                                                        <i class="fas fa-external-link-square-alt mt-0"></i>
+                                                                    </a>
+                                                                }
+                                                            }
+                                                        </td>
+                                                        <td class="text-sm text-center" style="font-size: 12px;">
+                                                            <a class="btn btn-outline-dark winter-neva-gradient btn-rounded btn-sm px-2" title="Renewal" href="@Url.Action("Renewal", "CompetentPersonnel", new {id=item.PersonnelId})">
+                                                                <i class="fas fa-sync-alt mt-0"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <a asp-action="Register" class="btn btn-outline-dark tempting-azure-gradient btn-block text-white text-sm font-weight-bold" style="font-size: 12px;">Create Competent Personnel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CSS{
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <link href="~/mdb/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/mdb/css/addons/datatables-select.min.css" rel="stylesheet" />
+
+    <style>
+        .select-wrapper input.select-dropdown {
+            font-size: 12px;
+        }
+
+        .dropdown-content li > span {
+            font-size: 12px;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        new WOW().init();
+
+        $(document).ready(function () {
+            $('#Competent').DataTable();
+            $('#Competent_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+            });
+            $('#Competent_wrapper .dataTables_filter').find('input').each(function () {
+                $('input').attr("placeholder", "Search");
+                $('input').attr("style", 'font-size: 12px');
+                $('input').removeClass('form-control-sm');
+            });
+            $('#Competent_wrapper .dataTables_length').addClass('d-flex flex-row');
+            $('#Competent_wrapper .dataTables_filter').addClass('md-form');
+            $('#Competent_wrapper select').removeClass(
+                'custom-select custom-select-sm form-control form-control-sm');
+            $('#Competent_wrapper select').addClass('mdb-select');
+            $('#Competent_wrapper .mdb-select').materialSelect();
+            $('#Competent_wrapper .dataTables_filter').find('label').remove();
+        });
+
+        //auto hide viewbag.alert
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#alert").fadeOut();
+            }, 3000);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
