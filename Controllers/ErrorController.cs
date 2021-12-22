@@ -12,5 +12,10 @@ namespace BLMS.Controllers
         {
             return View("NoPermission");
         }
+
+        public IActionResult NoAuthentication()
+        {
+            return View("NoAuthentication");
+        }
     }
 }

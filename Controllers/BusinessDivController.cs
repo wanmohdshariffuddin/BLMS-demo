@@ -4,6 +4,7 @@ using BLMS.CustomAttributes;
 using BLMS.Enums;
 using BLMS.Models.Admin;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static BLMS.Helper;
@@ -14,10 +15,11 @@ namespace BLMS.Controllers
     {
         readonly AdminDBContext dbContext = new AdminDBContext();
         readonly ddlAdminDBContext ddlDBContext = new ddlAdminDBContext();
+        readonly LogDBContext logDBContext = new LogDBContext();
 
         #region GRIDVIEW
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
         public ActionResult Index()
         {
             List<BusinessDiv> BusinessDivList = dbContext.BusinessDivGetAll().ToList();
@@ -46,9 +48,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region CREATE
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Create()
         {
             return View();
@@ -59,53 +61,61 @@ namespace BLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind] BusinessDiv businessDiv)
         {
+            string UserName = HttpContext.User.Identity.Name;
+
             try
             {
-                string UserName = HttpContext.User.Identity.Name;
-
                 #region VALIDATION
                 if (string.IsNullOrEmpty(businessDiv.DivName))
                 {
-                    ModelState.AddModelError("", "Please type Business Division");
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please type Business Division");
                 }
                 #endregion
 
                 else
                 {
-                    string DivName = businessDiv.DivName;
+                    BusinessDiv checkbusinessDiv = dbContext.CheckBusinessDivByName(businessDiv.DivName);
 
-                    BusinessDiv checkbusinessDiv = dbContext.CheckBusinessDivByName(DivName);
-
-                    #region CHECK DUPLICATION 
+                    #region CHECK DUPLICATE DATA
                     if (checkbusinessDiv.ExistData == 1)
                     {
-                        ViewBag.Alert = AlertNotification.ShowAlert(Alert.Danger, string.Format("{0} already existed in BLMS database!", DivName));
-                        return View(businessDiv);
+                        ViewBag.Alert = AlertNotification.ShowAlert(Alert.Danger, string.Format("{0} already existed in BLMS database!", businessDiv.DivName));
                     }
                     #endregion
-
+                    
                     else
                     {
                         dbContext.AddBusinessDiv(businessDiv, UserName);
-                        TempData["createMessage"] = string.Format("{0} has been successfully created!", DivName);
+                        TempData["createMessage"] = string.Format("{0} has been successfully created!", businessDiv.DivName);
                         return RedirectToAction("Index");
                     }
                 }
 
                 return View(businessDiv);
             }
-            catch
+            catch(Exception ex)
             {
+                #region ERROR LOG
+                string path = "BUSINESS DIVISION";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return View();
             }
         }
         #endregion
 
         #region EDIT
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Edit(int id)
         {
             BusinessDiv businessDiv = dbContext.GetBusinessDivByID(id);
@@ -123,36 +133,31 @@ namespace BLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind] BusinessDiv businessDiv)
         {
+            string UserName = HttpContext.User.Identity.Name;
+
             try
             {
-                string UserName = HttpContext.User.Identity.Name;
-
                 #region VALIDATION
                 if (string.IsNullOrEmpty(businessDiv.DivName))
                 {
-                    ModelState.AddModelError("", "Please type Business Division");
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please type Business Division");
                 }
                 #endregion
 
                 else
                 {
-                    string DivName = businessDiv.DivName;
-                    string OldDivName = businessDiv.OldDivName;
-
-                    BusinessDiv checkbusinessDiv = dbContext.CheckBusinessDivByName(DivName);
+                    BusinessDiv checkbusinessDiv = dbContext.CheckBusinessDivByName(businessDiv.DivName);
 
                     #region CHECK DUPLICATION
-                    if (checkbusinessDiv.ExistData == 1 && DivName != OldDivName)
+                    if (checkbusinessDiv.ExistData == 1 && businessDiv.DivName != businessDiv.OldDivName)
                     {
                         ViewBag.Alert = AlertNotification.ShowAlert(Alert.Danger, string.Format("{0} already existed in BLMS database!", businessDiv.DivName));
-                        return View(businessDiv);
                     }
                     #endregion
 
                     else
                     {
-                        if (DivName == OldDivName)
+                        if (businessDiv.DivName == businessDiv.OldDivName)
                         {
                             dbContext.EditBusinessDiv(businessDiv, UserName);
                             return RedirectToAction("Index");
@@ -168,8 +173,20 @@ namespace BLMS.Controllers
 
                 return View(businessDiv);
             }
-            catch
+            catch(Exception ex)
             {
+                #region ERROR LOG
+                string path = "BUSINESS DIVISION";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return View();
             }
         }
@@ -180,6 +197,7 @@ namespace BLMS.Controllers
         [Authorize(AccessLevel.ADMINISTRATION)]
         public JsonResult Delete(int Id)
         {
+            string UserName = HttpContext.User.Identity.Name;
 
             try
             {
@@ -192,14 +210,26 @@ namespace BLMS.Controllers
                 }
                 else
                 {
-                    dbContext.DeleteBusinessDiv(Id);
+                    dbContext.DeleteBusinessDiv(Id, businessDiv.DivName, UserName);
                     TempData["deleteMessage"] = string.Format("{0} has been deleted from BLMS database!", businessDiv.DivName);
                 }
 
                 return Json(new { status = "Success" });
             }
-            catch
+            catch (Exception ex)
             {
+                #region ERROR LOG
+                string path = "BUSINESS DIVISION";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return Json(new { status = "Fail" });
             }
         }

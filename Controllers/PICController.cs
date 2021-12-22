@@ -18,8 +18,8 @@ namespace BLMS.Controllers
         readonly ddlAdminDBContext ddlDBContext = new ddlAdminDBContext();
 
         #region GRIDVIEW
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
         public ActionResult Index()
         {
             List<PIC> PICList = dbContext.PICGetAll().ToList();
@@ -44,9 +44,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region CREATE
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Create()
         {
             #region DROPDOWN
@@ -163,9 +163,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region EDIT
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Edit(int id)
         {
             PIC pic = dbContext.GetPICByID(id);

@@ -1,4 +1,6 @@
-﻿using BLMS.Models;
+﻿using BLMS.Context;
+using BLMS.Models;
+using BLMS.Models.Admin;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +15,8 @@ namespace BLMS.Controllers
 {
     public class HomeController : Controller
     {
+        readonly LoginDBContext loginDBContext = new LoginDBContext();
+
         public IActionResult Index()
         {
             User objLoggedInUser = new User();
@@ -70,15 +74,29 @@ namespace BLMS.Controllers
             user.STAFF_EMAIL = HttpContext.Request.Query["EMAIL"];
             user.PASSWORD = "BLMS";
 
-            TokenProvider _tokenProvider = new TokenProvider();
-            var userToken = _tokenProvider.LoginUser(user.STAFF_EMAIL.Trim(), user.PASSWORD.Trim());
-            if (userToken != null)
-            {
-                //Save token in session object
-                HttpContext.Session.SetString("JWToken", userToken);
-            }
+            User getUser = loginDBContext.GetUserByEmail(user.STAFF_EMAIL);
 
-            return Redirect("~/Dashboard/Index");
+            if (string.IsNullOrEmpty(user.STAFF_EMAIL))
+            {
+                return Redirect("~/Error/NoAuthentication");
+            }
+            else if (string.IsNullOrEmpty(getUser.ROLE))
+            {
+                return Redirect("~/AllUser/Index");
+            }
+            else
+            {
+                TokenProvider _tokenProvider = new TokenProvider();
+                var userToken = _tokenProvider.LoginUser(user.STAFF_EMAIL.Trim(), user.PASSWORD.Trim());
+
+                if (userToken != null)
+                {
+                    //Save token in session object
+                    HttpContext.Session.SetString("JWToken", userToken);
+                }
+
+                return Redirect("~/Dashboard/Index");
+            }
         }
 
         public IActionResult Logoff()

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\azhar.yusof\\Documents\\BLMS\\BLMS.csproj": {}
+    "C:\\Users\\aida.nazri\\source\\git\\BLMSv1\\BLMS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\azhar.yusof\\Documents\\BLMS\\BLMS.csproj": {
+    "C:\\Users\\aida.nazri\\source\\git\\BLMSv1\\BLMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\azhar.yusof\\Documents\\BLMS\\BLMS.csproj",
+        "projectUniqueName": "C:\\Users\\aida.nazri\\source\\git\\BLMSv1\\BLMS.csproj",
         "projectName": "BLMS",
-        "projectPath": "C:\\Users\\azhar.yusof\\Documents\\BLMS\\BLMS.csproj",
-        "packagesPath": "C:\\Users\\azhar.yusof\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\azhar.yusof\\Documents\\BLMS\\obj\\",
+        "projectPath": "C:\\Users\\aida.nazri\\source\\git\\BLMSv1\\BLMS.csproj",
+        "packagesPath": "C:\\Users\\aida.nazri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aida.nazri\\source\\git\\BLMSv1\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\azhar.yusof\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aida.nazri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,8 +28,7 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net50": {
             "projectReferences": {}
           }
         },
@@ -37,8 +39,7 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net50": {
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -65,25 +66,12 @@
               "version": "[4.8.2, )"
             }
           },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
         }
       }
     }

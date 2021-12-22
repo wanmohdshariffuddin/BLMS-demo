@@ -1,4 +1,5 @@
-﻿using BLMS.Models.License;
+﻿using BLMS.Connection;
+using BLMS.Models.License;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,15 +9,17 @@ namespace BLMS.Context
 {
     public class AllUserDBContext
     {
-        readonly string connectionstring = "Data Source= 10.49.45.40; Database=BLMS; User ID = Appsa; Password=Opuswebsql2018; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //readonly string connectionstring = "Data Source = 10.249.1.125; Database=BLMSDev;User ID = Appsa; Password=Opuswebsql2017;Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        readonly ConnectionSQL connectSQLAll = new ConnectionSQL();
+        readonly LogDBContext LogDbContext = new LogDBContext();
 
         #region GRIDVIEW
         public IEnumerable<LicenseAllUser> LicenseAllUserGetAll()
         {
             var licenseAllUserList = new List<LicenseAllUser>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLAll.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("splicenseAllUserGetAll", conn);
@@ -64,7 +67,9 @@ namespace BLMS.Context
         {
             var licenseAllUser = new LicenseAllUser();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLAll.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseAllUserGetById", conn);

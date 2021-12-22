@@ -15,7 +15,7 @@ namespace BLMS.CustomAttributes
 
             switch (obj)
             {
-                case Enums.Alert.WarningTwo:
+                case Enums.Alert.WarningFive:
                     alertDiv = "<div class='alert alert-dark sunny-morning-gradient alert-dismissable' id='alert'><button type='button' class='close' data-dismiss='alert'>&times;" +
                         "</button><i class='fa fa-exclamation-circle'></i>" +
                         "<strong> Warning </strong>" +

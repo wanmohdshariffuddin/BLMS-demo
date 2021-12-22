@@ -17,7 +17,7 @@
 
                         <div class="row">
                             <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
-                                <form asp-action="EditRegister" autocomplete="off">
+                                <form asp-action="EditRegister" autocomplete="off" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-12 text-left">
                                             <div id="alert" class="form-group" style="font-size: 14px;">
@@ -29,6 +29,7 @@
                                     <input type="hidden" asp-for="LicenseID" />
                                     <input type="hidden" asp-for="OldLicenseName" />
                                     <input type="hidden" asp-for="LicenseFileName" />
+                                    <input type="hidden" asp-for="UserType" />
 
                                     <div class="row">
                                         <div class="col-12">

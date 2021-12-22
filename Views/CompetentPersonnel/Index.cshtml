@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BLMS.Models.SOP.CompetentPersonnel>
+﻿@model IEnumerable<BLMS.Models.SOP.Competent>
 
 @{
     ViewData["Title"] = "Competent Personnel";
@@ -66,9 +66,18 @@
                                                             @Html.DisplayFor(modelItem => item.BusinessUnit)
                                                         </td>
                                                         <td class="text-sm col-2" style="font-size: 12px;">
-                                                            <a title="Click here to view details" href="@Url.Action("Details", "CompetentPersonnel", new {id=item.PersonnelId})">
-                                                                <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.PersonnelName)</span>
-                                                            </a>
+                                                            @if (item.UserRole == "ADMINISTRATOR")
+                                                            {
+                                                                <a title="Click here to view details" href="@Url.Action("Details", "CompetentPersonnel", new {id=item.PersonnelId})">
+                                                                    <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.PersonnelName)</span>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="font-weight-bold">
+                                                                    @Html.DisplayFor(modelItem => item.PersonnelName)
+                                                                </label>
+                                                            }
                                                         </td>
                                                         <td class="text-sm col-2" style="font-size: 12px;">
                                                             @Html.DisplayFor(modelItem => item.CertFrom)
@@ -77,40 +86,40 @@
                                                             @Html.DisplayFor(modelItem => item.CertType)
                                                         </td>
                                                         <td class="text-sm col-2" style="font-size: 12px;">
-                                                            @if (item.AppointedDt.HasValue)
+                                                            @if (!string.IsNullOrEmpty(item.AppointedDT))
                                                             {
                                                                 <label class="font-weight-bold">Appointment Date:</label>
                                                                 <br />
-                                                                @Html.DisplayFor(modelItem => item.AppointedDt)
+                                                                @Html.DisplayFor(modelItem => item.AppointedDT)
 
                                                                 <br /><br />
                                                             }
 
-                                                            @if (item.ExpiredDt.HasValue)
+                                                            @if (!string.IsNullOrEmpty(item.ExpiredDT))
                                                             {
                                                                 <label class="font-weight-bold">Expired Date:</label>
                                                                 <br />
-                                                                @Html.DisplayFor(modelItem => item.ExpiredDt)
+                                                                @Html.DisplayFor(modelItem => item.ExpiredDT)
                                                             }
 
-                                                            @if (item.AppointedDt == null && item.ExpiredDt == null)
+                                                            @if (item.AppointedDT == null && item.ExpiredDT == null)
                                                             {
                                                                 <i class="text-sm font-italic" style="font-size: 12px;">No date</i>
                                                             }
                                                         </td>
                                                         <td class="text-sm text-center" style="font-size: 12px;">
-                                                            @if (item.YearAwarded != null)
+                                                            @if (!string.IsNullOrEmpty(item.YearAward))
                                                             {
-                                                                @Html.DisplayFor(modelItem => item.YearAwarded)
+                                                                @Html.DisplayFor(modelItem => item.YearAward)
                                                             }
                                                             else
                                                             {
-                                                            <i class="text-sm" style="font-size: 12px;">-</i>
+                                                                <i class="text-sm" style="font-size: 12px;">-</i>
                                                             }
                                                         </td>
                                                         <td class="text-sm text-center col-1" style="font-size: 12px;">
                                                             @{
-                                                                if (item.CertFileName == null)
+                                                                if (string.IsNullOrEmpty(item.CertFileName))
                                                                 {
                                                                     <i class="text-sm font-italic" style="font-size: 12px;">Not available</i>
                                                                 }
@@ -123,9 +132,12 @@
                                                             }
                                                         </td>
                                                         <td class="text-sm text-center" style="font-size: 12px;">
-                                                            <a class="btn btn-outline-dark winter-neva-gradient btn-rounded btn-sm px-2" title="Renewal" href="@Url.Action("Renewal", "CompetentPersonnel", new {id=item.PersonnelId})">
-                                                                <i class="fas fa-sync-alt mt-0"></i>
-                                                            </a>
+                                                            @if (item.UserRole == "ADMINISTRATOR")
+                                                            {
+                                                                <a class="btn btn-outline-dark winter-neva-gradient btn-rounded btn-sm px-2" title="Renewal" href="@Url.Action("Renewal", "CompetentPersonnel", new {id=item.PersonnelId})">
+                                                                    <i class="fas fa-sync-alt mt-0"></i>
+                                                                </a>
+                                                            }
                                                         </td>
                                                     </tr>
                                                     i++;

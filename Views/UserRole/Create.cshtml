@@ -46,7 +46,7 @@
 
                                             <div class="form-group">
                                                 <div class="md-form form-sm">
-                                                    <select asp-for="RoleID"
+                                                    <select id="ddlUserRole" asp-for="RoleID"
                                                             class="mdb-select md-form colorful-select dropdown-primary"
                                                             asp-items="@(new SelectList(@ViewBag.ListofRole,"RoleID", "Role"))"
                                                             searchable="Search here"
@@ -58,7 +58,7 @@
 
                                             <div class="form-group">
                                                 <div class="md-form form-sm">
-                                                    <select asp-for="UserTypeID"
+                                                    <select id="ddlUserType" asp-for="UserTypeID"
                                                             class="mdb-select md-form colorful-select dropdown-primary"
                                                             asp-items="@(new SelectList(@ViewBag.ListofUserType,"UserTypeID", "UserType"))"
                                                             searchable="Search here"
@@ -107,6 +107,20 @@
         $(document).ready(function () {
             $('.mdb-select').materialSelect();
         });
+
+        $(function () {
+            $("#ddlUserRole").change(function () {
+                $.getJSON('@Url.Content("~/UserRole/JSONGetUserRole")', { RoleID: $("#ddlUserRole").val() }, function (d) {
+                    var row = "";
+                    $("#ddlUserType").empty();
+                    items = "<option value='0'>Please select User Type</option>";
+                    $.each(d, function (i, item) {
+                        items += "<option value=" + item.value + ">" + item.text + "</option>";
+                    });
+                    $("#ddlUserType").html(items);
+                })
+            })
+        })
     </script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

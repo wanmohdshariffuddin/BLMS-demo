@@ -4,6 +4,7 @@ using BLMS.CustomAttributes;
 using BLMS.Enums;
 using BLMS.Models.Admin;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static BLMS.Helper;
@@ -13,10 +14,11 @@ namespace BLMS.Controllers
     public class CertBodyController : Controller
     {
         readonly AdminDBContext dbContext = new AdminDBContext();
+        readonly LogDBContext logDBContext = new LogDBContext();
 
         #region GRIDVIEW
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
         public IActionResult Index()
         {
             List<CertBody> CertbodyList = dbContext.CertBodyGetAll().ToList();
@@ -39,9 +41,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region CREATE
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Create()
         {
             return View();
@@ -52,24 +54,28 @@ namespace BLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind] CertBody certBody)
         {
+            string UserName = HttpContext.User.Identity.Name;
+
             try
             {
-                string UserName = HttpContext.User.Identity.Name;
-
+                #region VALIDATION
                 if (string.IsNullOrEmpty(certBody.CertBodyName))
                 {
-                    ModelState.AddModelError("", "Please type Certificate Body");
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please type Certificate Body");
                 }
-                else if (ModelState.IsValid)
+                #endregion
+
+                else
                 {
                     CertBody checkCertBody = dbContext.CheckCertBodyByName(certBody.CertBodyName);
 
+                    #region CHECK DUPLICATION
                     if (checkCertBody.ExistData == 1)
                     {
                         ViewBag.Alert = AlertNotification.ShowAlert(Alert.Danger, string.Format("{0} already existed in BLMS database!", certBody.CertBodyName));
-                        return View(certBody);
                     }
+                    #endregion
+
                     else
                     {
                         dbContext.AddCertBody(certBody, UserName);
@@ -80,17 +86,29 @@ namespace BLMS.Controllers
 
                 return View(certBody);
             }
-            catch
+            catch (Exception ex)
             {
+                #region ERROR LOG
+                string path = "CERTIFICATE BODY";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return View();
             }
         }
         #endregion
 
         #region EDIT
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
-        //[NoDirectAccess]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
+        [NoDirectAccess]
         public ActionResult Edit(int id)
         {
             CertBody certBody = dbContext.GetCertBodyByID(id);
@@ -108,63 +126,95 @@ namespace BLMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, [Bind] CertBody certBody)
         {
+            string UserName = HttpContext.User.Identity.Name;
+
             try
             {
-                string UserName = HttpContext.User.Identity.Name;
-
+                #region VALIDATION
                 if (string.IsNullOrEmpty(certBody.CertBodyName))
                 {
-                    ModelState.AddModelError("", "Please type Certificate Body");
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please type Certificate Body");
                 }
-                else if (ModelState.IsValid)
+                #endregion
+
+                else
                 {
                     CertBody checkCertBody = dbContext.CheckCertBodyByName(certBody.CertBodyName);
 
+                    #region CHECK DUPLICATION
                     if (checkCertBody.ExistData == 1 && certBody.CertBodyName != certBody.OldCertBodyName)
                     {
                         ViewBag.Alert = AlertNotification.ShowAlert(Alert.Danger, string.Format("{0} already existed in BLMS database!", certBody.CertBodyName));
-                        return View(certBody);
                     }
-                    else if (checkCertBody.ExistData == 1 && certBody.CertBodyName == certBody.OldCertBodyName)
-                    {
-                        dbContext.EditCertBody(certBody, UserName);
-                        return RedirectToAction("Index");
-                    }
+                    #endregion
+
                     else
                     {
-                        dbContext.EditCertBody(certBody, UserName);
-                        TempData["editMessage"] = string.Format("{0} has been successfully edited!", certBody.CertBodyName);
-                        return RedirectToAction("Index");
+                        if (checkCertBody.ExistData == 1 && certBody.CertBodyName == certBody.OldCertBodyName)
+                        {
+                            dbContext.EditCertBody(certBody, UserName);
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            dbContext.EditCertBody(certBody, UserName);
+                            TempData["editMessage"] = string.Format("{0} has been successfully edited!", certBody.CertBodyName);
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
 
-                return View(dbContext);
+                return View(certBody);
             }
-            catch
+            catch (Exception ex)
             {
+                #region ERROR LOG
+                string path = "CERTIFICATE BODY";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return View();
             }
         }
         #endregion
 
         #region DELETE
-        //[Authorize(Roles.ADMINISTRATOR)]
-        //[Authorize(AccessLevel.ADMINISTRATION)]
+        [Authorize(Roles.ADMINISTRATOR)]
+        [Authorize(AccessLevel.ADMINISTRATION)]
         public JsonResult Delete(int Id)
         {
+            string UserName = HttpContext.User.Identity.Name;
 
             try
             {
                 CertBody certBody = dbContext.GetCertBodyByID(Id);
 
-                dbContext.DeleteCertBody(Id);
+                dbContext.DeleteCertBody(Id, certBody.CertBodyName, UserName);
                 TempData["deleteMessage"] = string.Format("{0} has been deleted from BLMS database!", certBody.CertBodyName);
 
                 return Json(new { status = "Success" });
             }
-            catch
+            catch(Exception ex)
             {
+                #region ERROR LOG
+                string path = "CERTIFICATE BODY";
+
+                System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+
+                string msg = ex.Message;
+                string method = trace.GetFrame((trace.FrameCount - 1)).GetMethod().ToString();
+                Int32 lineNumber = trace.GetFrame((trace.FrameCount - 1)).GetFileLineNumber();
+
+                logDBContext.AddErrorLog(path, method, lineNumber, msg, UserName);
+                #endregion
+
                 return Json(new { status = "Fail" });
             }
         }
