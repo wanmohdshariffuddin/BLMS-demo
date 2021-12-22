@@ -1,17 +1,16 @@
-﻿using BLMS.Models.Admin;
+﻿using BLMS.Connection;
+using BLMS.Models.Admin;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BLMS.Context
 {
     public class LogDBContext
     {
-        readonly string connectionstring = "Data Source= 10.49.45.40; Database=BLMS; User ID = Appsa; Password=Opuswebsql2018; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //readonly string connectionstring = "Data Source = 10.249.1.125; Database=BLMSDev;User ID = Appsa; Password=Opuswebsql2017;Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        readonly ConnectionSQL connectSQLLog = new ConnectionSQL();
+        readonly LogDBContext LogDbContext = new LogDBContext();
 
         #region AUDIT
         #region GRIDVIEW
@@ -19,8 +18,9 @@ namespace BLMS.Context
         {
             var AuditLogList = new List<AuditLog>();
 
+            Models.Connection connection = connectSQLLog.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuditLogGetAll", conn);
@@ -49,6 +49,30 @@ namespace BLMS.Context
             return AuditLogList;
         }
         #endregion
+
+        #region ADD AUDIT
+        public void AddAuditLog(AuditLog auditlist)
+        {
+            Models.Connection connection = connectSQLLog.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spAuditLogAdd", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("Command", auditlist.Command);
+                cmd.Parameters.AddWithValue("SPName", auditlist.SPName);
+                cmd.Parameters.AddWithValue("ScreenPath", auditlist.ScreenPath);
+                cmd.Parameters.AddWithValue("OldValue", auditlist.OldValue);
+                cmd.Parameters.AddWithValue("NewValue", auditlist.NewValue);
+                cmd.Parameters.AddWithValue("CreatedBy", auditlist.CreatedBy);
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+        #endregion
         #endregion
 
         #region ERROR
@@ -57,8 +81,9 @@ namespace BLMS.Context
         {
             var ErrorLogList = new List<ErrorLog>();
 
+            Models.Connection connection = connectSQLLog.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spErrorLogGetAll", conn);
@@ -84,6 +109,29 @@ namespace BLMS.Context
             }
 
             return ErrorLogList;
+        }
+        #endregion
+
+        #region ADD ERROR
+        public void AddErrorLog(string path, string method, Int32 lineNumber, string msg, string UserName)
+        {
+            Models.Connection connection = connectSQLLog.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spErrorLogAdd", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("PageName", path);
+                cmd.Parameters.AddWithValue("ErrorMessage", msg);
+                cmd.Parameters.AddWithValue("Method", method);
+                cmd.Parameters.AddWithValue("LineNumber", lineNumber);
+                cmd.Parameters.AddWithValue("CreatedBy", UserName);
+                
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
         }
         #endregion
         #endregion

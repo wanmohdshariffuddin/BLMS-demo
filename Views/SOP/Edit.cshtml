@@ -1,0 +1,154 @@
+﻿@model BLMS.Models.SOP.SOP
+
+@{
+    ViewData["Title"] = "SOP & Guideline";
+    Layout = "~/Views/Shared/_SOPLayout.cshtml";
+}
+
+<div class="container-fluid mt-5 mt-md-0 mb-0">
+    <div class="row" style="margin-top: -100px;">
+        <div class="col-md-12 px-lg-5">
+            <div class="card pb-5 mx-md-3">
+                <div class="card-body">
+                    <div class="container text-center my-5">
+                        <h2 class="title text-muted font-weight-bold my-3 wow fadeIn" data-wow-delay="0.2s">
+                            <strong>EDIT SOP & GUIDELINE</strong>
+                        </h2>
+
+                        <div class="row">
+                            <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
+                                <form asp-action="Register" autocomplete="off" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div id="alert" class="form-group" style="font-size: 14px;">
+                                                @Html.Raw(@ViewBag.Alert)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        SOP Details
+                                                    </span>
+                                                </div>
+
+                                                <input type="hidden" asp-for="SOPID" />
+                                                <input type="hidden" asp-for="OldSOPName" />
+                                                <input type="hidden" asp-for="OldSOPFileName" />
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="SOPName" class="form-control" placeholder="Please type SOP Name" style="font-size:13px;">
+                                                                <label asp-for="SOPName" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> SOP / Guideline Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RefNo" class="form-control" placeholder="Please type Reference No." style="font-size:13px;">
+                                                                <label asp-for="RefNo" class="control-label font-weight-bold" style="font-size:18px;"><span style="color:red;">*</span> Reference No</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="RevNo" class="form-control" placeholder="Please type Revision No." style="font-size:13px;">
+                                                                <label asp-for="RevNo" class="control-label font-weight-bold" style="font-size:18px;">Revision No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="md-form input-group form-sm">
+                                                                <input asp-for="EffectiveDT" placeholder="Please select Effective Date" type="text" class="form-control EffectiveDT" style="font-size:13px;">
+                                                                <div class="input-group-append md-addon">
+                                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                                <br /><br />
+                                                                <label asp-for="EffectiveDT" class="mdb-main-label font-weight-bold" style="font-size: 18px;">Effective Date</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        File Attachment
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group form-sm text-left" action="#">
+                                                                <label class="control-label font-weight-bold text-muted text-sm" style="font-size: 14px;"><span style="color:red;">*</span> SOP File</label>
+                                                                <div class="custom-file mb-3">
+                                                                    <input type="file" class="custom-file-input" name="SOPFile" style="font-size: 13px;">
+                                                                    @if (string.IsNullOrEmpty(Model.SOPFileName))
+                                                                    {
+                                                                        <label class="custom-file-label" for="customFile" style="font-size: 13px;">Choose license file</label>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <label class="custom-file-label" for="customFile" style="font-size: 13px;">@Html.DisplayFor(item => item.SOPFileName)</label>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-12 text-left">
+                                            <div class="form-group">
+                                                <input type="submit" value="Edit" asp-action="Edit" class="btn btn-outline-dark dusty-grass-gradient font-weight-bold waves-effect" style="font-size:12px;" />
+                                                <a asp-action="Index" class="btn btn-outline-dark cloudy-knoxville-gradient waves-effect font-weight-bold" style="font-size: 12px;">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').materialSelect();
+        });
+
+        $('.EffectiveDT').pickadate({
+            format: "dd/mm/yyyy"
+        });
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

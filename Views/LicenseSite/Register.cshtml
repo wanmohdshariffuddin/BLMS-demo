@@ -17,7 +17,7 @@
 
                         <div class="row">
                             <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
-                                <form asp-action="Register" autocomplete="off">
+                                <form asp-action="Register" autocomplete="off" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-12 text-left">
                                             <div id="alert" class="form-group" style="font-size: 14px;">
@@ -187,7 +187,7 @@
                                                             <div class="form-group form-sm text-left" action="#">
                                                                 <label class="control-label font-weight-bold text-muted text-sm" style="font-size: 14px;"><span style="color:red;">*</span> License File</label>
                                                                 <div class="custom-file mb-3">
-                                                                    <input type="file" class="custom-file-input" name="LicenseFile" style="font-size: 13px;">
+                                                                    <input type="file" id="customFile" class="custom-file-input" name="LicenseFile" style="font-size: 13px;">
                                                                     <label class="custom-file-label" for="customFile" style="font-size: 13px;">Choose license file</label>
                                                                 </div>
                                                             </div>

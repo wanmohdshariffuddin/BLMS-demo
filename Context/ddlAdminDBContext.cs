@@ -1,4 +1,5 @@
-﻿using BLMS.Models.Admin;
+﻿using BLMS.Connection;
+using BLMS.Models.Admin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,8 +9,8 @@ namespace BLMS.Context
 {
     public class ddlAdminDBContext
     {
-        readonly string connectionstring = "Data Source= 10.49.45.40; Database=BLMS; User ID = Appsa; Password=Opuswebsql2018; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //readonly string connectionstring = "Data Source = 10.249.1.125; Database=BLMSDev;User ID = Appsa; Password=Opuswebsql2017;Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        readonly ConnectionSQL connectSQLDDLAdmin = new ConnectionSQL();
+        readonly LogDBContext LogDbContext = new LogDBContext();
 
         #region BUSINESS UNIT
         #region GET BUSINESS DIVISION
@@ -17,7 +18,9 @@ namespace BLMS.Context
         {
             var businessUnitList = new List<BusinessUnit>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessDiv", conn);
@@ -48,7 +51,9 @@ namespace BLMS.Context
         {
             var staffNamePICList = new List<PIC>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaff", conn);
@@ -77,7 +82,9 @@ namespace BLMS.Context
         {
             var userTypePICList = new List<PIC>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLPICUserType", conn);
@@ -108,7 +115,9 @@ namespace BLMS.Context
         {
             var staffNameUserRoleList = new List<UserRole>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaff", conn);
@@ -137,7 +146,9 @@ namespace BLMS.Context
         {
             var roleUserRoleList = new List<UserRole>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLRole", conn);
@@ -166,7 +177,9 @@ namespace BLMS.Context
         {
             var userTypeUserRoleList = new List<UserRole>();
 
-            using (SqlConnection conn = new SqlConnection(connectionstring))
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLUserType", conn);
@@ -187,6 +200,27 @@ namespace BLMS.Context
             }
 
             return userTypeUserRoleList;
+        }
+        #endregion
+
+        #region ddlUserTypeLinkedRole
+        public DataSet ddlUserTypeLinkedRole(int RoleID)
+        {
+            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+
+            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("spDDLUserTypeLinkedRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@RoleID", RoleID);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds;
+            }
         }
         #endregion
         #endregion

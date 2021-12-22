@@ -15,10 +15,6 @@
                             <strong>CREATE CERTIFICATE BODY</strong>
                         </h2>
 
-                        <p class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s">
-                            Notes: Please fill the field to register new Certificate Body.
-                        </p>
-
                         <div class="row">
                             <div class="col-lg-12 wow fadeIn" data-wow-delay="0.2s">
                                 <form asp-action="Create" autocomplete="off">
@@ -31,17 +27,34 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="md-form form-sm">
-                                                <br />
-                                                <input asp-for="CertBodyName" class="form-control" placeholder="Please type Certificate Body" style="font-size: 14px;">
-                                                <label asp-for="CertBodyName" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Certificate Body</label>
+                                        <div class="col-12 text-left">
+                                            <div class="card">
+                                                <div class="card-header cloudy-knoxville-gradient text-left ">
+                                                    <span class="font-weight-bold dark-grey-text" style="font-size: 14px;">
+                                                        Certificate Body Details
+                                                    </span>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="md-form form-sm">
+                                                                <input asp-for="CertBodyName" class="form-control" placeholder="Please type Certificate Body" style="font-size: 13px;">
+                                                                <label asp-for="CertBodyName" class="control-label font-weight-bold" style="font-size: 18px;"><span style="color:red;">*</span> Certificate Body Name</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <span class="grey-text w-responsive mx-auto mb-3 wow fadeIn" data-wow-delay="0.2s" style="font-size: 11px;">
+                                                Notes: Column with (<span style="color:red;">*</span>) must be filled before save the data.
+                                            </span>
                                         </div>
                                     </div>
 
                                     <br />
-
+                                    
                                     <div class="row">
                                         <div class="col-md-12 text-left">
                                             <div class="form-group">

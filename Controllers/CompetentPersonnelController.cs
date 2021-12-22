@@ -15,6 +15,7 @@ namespace BLMS.Controllers
     public class CompetentPersonnelController : Controller
     {
         private readonly CompetentDBContext _context;
+        readonly CompetentPersonnelDBContext competentDBContext = new CompetentPersonnelDBContext();
         readonly AdminDBContext ddlOthers = new AdminDBContext();
 
         public CompetentPersonnelController(CompetentDBContext context)
@@ -23,8 +24,11 @@ namespace BLMS.Controllers
         }
 
         #region GRIDVIEW
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
+            string UserName = HttpContext.User.Identity.Name;
+
+            List<Competent> CompetentList = competentDBContext.CompetentPersonnelGetAll(UserName).ToList();
 
             #region Alert Message
             if (TempData["createMessage"] != null)
@@ -37,7 +41,7 @@ namespace BLMS.Controllers
             }
             #endregion
 
-            return View(await _context.CompetentPersonnel.OrderBy(x=>x.BusinessUnit).ThenBy(x=>x.PersonnelName).ToListAsync());
+            return View(CompetentList);
         }
         #endregion
 
@@ -97,87 +101,73 @@ namespace BLMS.Controllers
             competentPersonnel.CreatedBy = UserName;
             competentPersonnel.CreatedDt = DateTime.Now;
 
-            #region 4 WARNING
-            if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
+            #region VALIDATION
+            if(string.IsNullOrEmpty(competentPersonnel.PersonnelName))
             {
-                ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningFour, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body");
-            }
-            #endregion
-            else
-            {
-                #region 3 WARNING
-                if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit")
+                if(competentPersonnel.BusinessDiv == "Please Select Business Division")
                 {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "");
+                    if(competentPersonnel.BusinessUnit == "Please Select Business Unit")
+                    {
+                        if(competentPersonnel.CertFrom == "Please Select Certificate Body")
+                        {
+                            ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningFour, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body");
+                        }
+                        else
+                        {
+                            ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "");
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Division", "", "");
+                    }
                 }
-                else if(string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" &&  competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Certificate Body", "");
-                }
-                else if(string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Unit", "Please Select Certificate Body", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body", "");
-                }
-                #endregion
-
-                #region 2 WARNING
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Division", "", "");
-                }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessUnit == "Please Select Business Unit")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Unit", "", "");
-                }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Certificate Body", "", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Business Unit", "", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Certificate Body", "", "");
-                }
-                else if (competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Unit", "Please Select Certificate Body", "", "");
-                }
-                #endregion
-
-                #region 1 WARNING
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName))
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Type Staff Name");
                 }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division")
+            }
+            else if(competentPersonnel.BusinessDiv == "Please Select Business Division")
+            {
+                if(competentPersonnel.BusinessUnit == "Please Select Business Unit")
+                {
+                    if(competentPersonnel.CertFrom == "Please Select Certificate Body")
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body", "");
+                    }
+                    else
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Business Unit", "", "");
+                    }
+                }
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Business Division");
                 }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Unit")
+            }
+            else if(competentPersonnel.BusinessUnit == "Please Select Business Unit")
+            {
+                if(competentPersonnel.CertFrom == "Please Select Certificate Body")
+                {
+                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Unit", "Please Select Certificate Body", "", "");
+                }
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Business Unit");
                 }
-                else if (competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Certificate Body");
-                }
-                #endregion
+            }
+            else if(competentPersonnel.CertFrom == "Please Select Certificate Body")
+            {
+                ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Certificate Body");
+            }
+            #endregion
 
-                else
-                {
-                    _context.Add(competentPersonnel);
-                    await _context.SaveChangesAsync();
-
-                    TempData["createMessage"] = string.Format("{0} has been successfully created!", competentPersonnel.PersonnelName);
-                    return RedirectToAction("Index");
-                }
+            else
+            {
+                _context.Add(competentPersonnel);
+                await _context.SaveChangesAsync();
+                TempData["createMessage"] = string.Format("{0} has been successfully created!", competentPersonnel.PersonnelName);
+                return RedirectToAction("Index");
             }
 
             #region DROPDOWN
@@ -238,87 +228,73 @@ namespace BLMS.Controllers
             competentPersonnel.UpdatedBy = UserName;
             competentPersonnel.UpdatedDt = DateTime.Now;
 
-            #region 4 WARNING
-            if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
+            #region VALIDATION
+            if (string.IsNullOrEmpty(competentPersonnel.PersonnelName))
             {
-                ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningFour, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body");
-            }
-            #endregion
-            else
-            {
-                #region 3 WARNING
-                if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit")
+                if (string.IsNullOrEmpty(competentPersonnel.BusinessDiv))
                 {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "");
+                    if (string.IsNullOrEmpty(competentPersonnel.BusinessUnit))
+                    {
+                        if (string.IsNullOrEmpty(competentPersonnel.CertFrom))
+                        {
+                            ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningFour, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body");
+                        }
+                        else
+                        {
+                            ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Business Unit", "");
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Division", "", "");
+                    }
                 }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Division", "Please Select Certificate Body", "");
-                }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Type Staff Name", "Please Select Business Unit", "Please Select Certificate Body", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body", "");
-                }
-                #endregion
-
-                #region 2 WARNING
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessDiv == "Please Select Business Division")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Division", "", "");
-                }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.BusinessUnit == "Please Select Business Unit")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Business Unit", "", "");
-                }
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName) && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Type Staff Name", "Please Select Certificate Body", "", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.BusinessUnit == "Please Select Business Unit")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Business Unit", "", "");
-                }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Certificate Body", "", "");
-                }
-                else if (competentPersonnel.BusinessUnit == "Please Select Business Unit" && competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Unit", "Please Select Certificate Body", "", "");
-                }
-                #endregion
-
-                #region 1 WARNING
-                else if (string.IsNullOrEmpty(competentPersonnel.PersonnelName))
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Type Staff Name");
                 }
-                else if (competentPersonnel.BusinessDiv == "Please Select Business Division")
+            }
+            else if (string.IsNullOrEmpty(competentPersonnel.BusinessDiv))
+            {
+                if (string.IsNullOrEmpty(competentPersonnel.BusinessUnit))
+                {
+                    if (string.IsNullOrEmpty(competentPersonnel.CertFrom))
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningThree, "Please Select Business Division", "Please Select Business Unit", "Please Select Certificate Body", "");
+                    }
+                    else
+                    {
+                        ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Division", "Please Select Business Unit", "", "");
+                    }
+                }
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Business Division");
                 }
-                else if (competentPersonnel.BusinessUnit == "Please Select Business Unit")
+            }
+            else if (string.IsNullOrEmpty(competentPersonnel.BusinessUnit))
+            {
+                if (string.IsNullOrEmpty(competentPersonnel.CertFrom))
+                {
+                    ViewBag.Alert = AlertNotification.ShowAlertAll(Alert.WarningTwo, "Please Select Business Unit", "Please Select Certificate Body", "", "");
+                }
+                else
                 {
                     ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Business Unit");
                 }
-                else if (competentPersonnel.CertFrom == "Please Select Certificate Body")
-                {
-                    ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Certificate Body");
-                }
-                #endregion
+            }
+            else if (string.IsNullOrEmpty(competentPersonnel.CertFrom))
+            {
+                ViewBag.Alert = AlertNotification.ShowAlert(Alert.Warning, "Please Select Certificate Body");
+            }
+            #endregion
 
-                else
-                {
-                    _context.Update(competentPersonnel);
-                    await _context.SaveChangesAsync();
-
-                    TempData["editMessage"] = string.Format("{0} has been successfully edited!", competentPersonnel.PersonnelName);
-                    return RedirectToAction("Index");
-                }
+            else
+            {
+                _context.Update(competentPersonnel);
+                await _context.SaveChangesAsync();
+                TempData["editMessage"] = string.Format("{0} has been successfully renewed!", competentPersonnel.PersonnelName);
+                return RedirectToAction("Index");
             }
 
             #region DROPDOWN
@@ -338,34 +314,5 @@ namespace BLMS.Controllers
             return View(competentPersonnel);
         }
         #endregion
-
-        // GET: CompetentPersonnel/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var competentPersonnel = await _context.CompetentPersonnel
-                .FirstOrDefaultAsync(m => m.PersonnelId == id);
-            if (competentPersonnel == null)
-            {
-                return NotFound();
-            }
-
-            return View(competentPersonnel);
-        }
-
-        // POST: CompetentPersonnel/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var competentPersonnel = await _context.CompetentPersonnel.FindAsync(id);
-            _context.CompetentPersonnel.Remove(competentPersonnel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
     }
 }
