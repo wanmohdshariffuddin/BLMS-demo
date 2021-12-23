@@ -279,7 +279,7 @@
                                                     <br />
                                                     <div class="col-md-12 form-sm">
                                                         <label asp-for="RejectionRemarks" class="control-label text-white"><span style="color:white;">*</span> Rejection Remarks</label>
-                                                        <textarea id="RejectionRemarks" onkeyup="EnableDisable(this)" placeholder="Please Type Rejection Remarks" asp-for="RejectionRemarks" rows="3" class="form-control" style="font-size:12px;"></textarea>
+                                                        <textarea id="RejectionRemarks" placeholder="Please Type Rejection Remarks" asp-for="RejectionRemarks" rows="3" class="form-control" style="font-size:12px;"></textarea>
                                                         <span asp-validation-for="RejectionRemarks" class="text-danger text-sm"></span>
                                                     </div>
                                                     <br />
@@ -306,6 +306,16 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        let inputElt = document.getElementById('RejectionRemarks');
+        let btn = document.getElementById('btnReject');
+
+        inputElt.addEventListener("RejectionRemarks", function () {
+            btn.disabled = (this.value === '');
+        })
+    </script>
+
+
     <script>
         var ConfirmApprove = function (LicenseID) {
 
@@ -341,11 +351,7 @@
             var LicenseID = $("#hidLicenseHQ").val();
             var Remarks = document.getElementById("RejectionRemarks").value;
 
-            if (document.getElementById("RejectionRemarks").value.length == 0) {
-                document.getElementById('btnReject').disabled = true;
-            }
-            else {
-                $.ajax({
+            $.ajax({
 
                 type: "POST",
                 url: '@Url.Action("ConfirmReject", "LicenseApproval")',
@@ -356,7 +362,6 @@
                     window.location.href = '@Url.Action("View", "LicenseApproval")';
                 }
             })
-            }
         }
     </script>
 

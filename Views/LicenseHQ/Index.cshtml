@@ -186,7 +186,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <a class="btn btn-outline-dark sunny-morning-gradient btn-rounded btn-sm px-2" title="Request Renewal" href="#" onclick="ConfirmRenewal(@item.LicenseID)" style="font-size: 12px;">
+                                                                <a class="btn btn-outline-dark sunny-morning-gradient btn-rounded btn-sm px-2" title="Request Renewal" href="@Url.Action("RequestRenewal", "LicenseHQ", new {id=item.LicenseID})" style="font-size: 12px;">
                                                                     <i class="fas fa-fist-raised mt-0"></i>
                                                                 </a>
                                                             }
@@ -196,29 +196,6 @@
                                                 }
                                             </tbody>
                                         </table>
-
-                                        <!--Renewal bootstrap confirmation box-->
-                                        <div class="modal fade top" id="renew-conformation" aria-labelledby="renew-conformation" aria-hidden="true" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog modal-frame modal-top modal-notify modal-info">
-                                                <div class="modal-content">
-                                                    <div class="modal-header flex-column">
-                                                        <div class="icon-box">
-                                                            <i class="material-icons">&#xE5CD;</i>
-                                                        </div>
-                                                        <h4 class="modal-title w-100 font-weight-bolder text-center text-white">CONFIRM LICENSE RENEWAL?</h4>
-                                                        <br />
-                                                        <p class="mb-1 align-self-sm-center text-white" style="color: red;"><i class="fas fa-exclamation-circle"></i> Administrator will be notified after you click on confirm button.</p>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center">
-                                                        <button type="button" class="btn btn-outline-dark winter-neva-gradient waves-effect" data-dismiss="modal">Cancel</button>
-                                                        <a href="#" class="btn btn-outline-dark young-passion-gradient waves-effect" onclick="RenewLicenseHQ()">Renew</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <input type="hidden" id="hidLicenseID" />
 
                                         <a asp-action="RequestLicense" class="btn btn-outline-dark tempting-azure-gradient btn-block text-white text-sm font-weight-bold" style="font-size: 12px;">Request License</a>
                                     </div>
@@ -252,28 +229,6 @@
 @section Scripts {
     <script>
         new WOW().init();
-
-        var ConfirmRenewal = function (LicenseID) {
-
-            $("#hidLicenseID").val(LicenseID);
-            $("#renew-conformation").modal('show');
-        }
-
-        var RenewLicenseHQ = function () {
-            var LicenseID = $("#hidLicenseID").val();
-
-            $.ajax({
-
-                type: "POST",
-                url: '@Url.Action("RequestRenewal", "LicenseHQ")',
-                dataType: "json",
-                data: { Id: LicenseID },
-                success: function (result) {
-                    $("#renew-conformation").modal("hide");
-                    window.location.href =  '@Url.Action("Index", "LicenseHQ")'
-                }
-            })
-        }
 
         $(document).ready(function () {
             $('#LicenseHQ').DataTable();

@@ -197,7 +197,7 @@
                                                             }
 
                                                             @*register license*@
-                                                            else if (item.isApproved == true)
+                                                            @if (item.isApproved == true)
                                                             {
                                                                 <a class="btn btn-outline-dark dusty-grass-gradient btn-rounded btn-sm px-2" title="Register License" href="@Url.Action("RegisterLicenseHQ", "LicenseAdmin", new {id=item.LicenseID})">
                                                                     <i class="fas fa-book-medical mt-0"></i>
@@ -205,16 +205,11 @@
                                                             }
 
                                                             @*Renew License**@
-                                                            else if ((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 90 && item.RenewReminderDT.ToString() != "9999-12-31 00:00:00.000")
+                                                            else if((item.RenewReminderDT.Date - DateTime.Now.Date).Days < 90 && item.RenewReminderDT.ToString() != "9999-12-31 00:00:00.000")
                                                             {
                                                                 <a class="btn btn-outline-dark sunny-morning-gradient btn-rounded btn-sm px-2" title="Renew License" href="@Url.Action("RenewalLicenseHQ", "LicenseAdmin", new {id=item.LicenseID})">
                                                                     <i class="fas fa-sync-alt mt-0"></i>
                                                                 </a>
-                                                            }
-
-                                                            else
-                                                            {
-                                                                <i class="text-sm font-italic" style="font-size: 12px;">No</i>
                                                             }
                                                         </td>
                                                     </tr>

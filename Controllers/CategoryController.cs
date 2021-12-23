@@ -17,8 +17,8 @@ namespace BLMS.Controllers
         readonly AdminDBContext dbContext = new AdminDBContext();
 
         #region GRIDVIEW
-        [Authorize(Roles.ADMINISTRATOR)]
-        [Authorize(AccessLevel.ADMINISTRATION)]
+        //[Authorize(Roles.ADMINISTRATOR)]
+        //[Authorize(AccessLevel.ADMINISTRATION)]
         public ActionResult Index()
         {
             List<Category> CategoryList = dbContext.CategoryGetAll().ToList();
@@ -41,9 +41,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region CREATE
-        [Authorize(Roles.ADMINISTRATOR)]
-        [Authorize(AccessLevel.ADMINISTRATION)]
-        [NoDirectAccess]
+        //[Authorize(Roles.ADMINISTRATOR)]
+        //[Authorize(AccessLevel.ADMINISTRATION)]
+        //[NoDirectAccess]
         public ActionResult Create()
         {
             return View();
@@ -103,9 +103,9 @@ namespace BLMS.Controllers
         #endregion
 
         #region EDIT
-        [Authorize(Roles.ADMINISTRATOR)]
-        [Authorize(AccessLevel.ADMINISTRATION)]
-        [NoDirectAccess]
+        //[Authorize(Roles.ADMINISTRATOR)]
+        //[Authorize(AccessLevel.ADMINISTRATION)]
+        //[NoDirectAccess]
         public ActionResult Edit(int id)
         {
             Category category = dbContext.GetCategoryByID(id);
@@ -190,8 +190,8 @@ namespace BLMS.Controllers
         #endregion
 
         #region DELETE
-        [Authorize(Roles.ADMINISTRATOR)]
-        [Authorize(AccessLevel.ADMINISTRATION)]
+        //[Authorize(Roles.ADMINISTRATOR)]
+        //[Authorize(AccessLevel.ADMINISTRATION)]
         public JsonResult Delete(int Id)
         {
 
