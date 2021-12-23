@@ -9,15 +9,14 @@ namespace BLMS.Context
 {
     public class AllUserDBContext
     {
-        readonly ConnectionSQL connectSQLAll = new ConnectionSQL();
-        readonly LogDBContext LogDbContext = new LogDBContext();
+        readonly ConnectionSQL connectSQL = new ConnectionSQL();
 
         #region GRIDVIEW
         public IEnumerable<LicenseAllUser> LicenseAllUserGetAll()
         {
             var licenseAllUserList = new List<LicenseAllUser>();
 
-            Models.Connection connection = connectSQLAll.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -67,7 +66,7 @@ namespace BLMS.Context
         {
             var licenseAllUser = new LicenseAllUser();
 
-            Models.Connection connection = connectSQLAll.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {

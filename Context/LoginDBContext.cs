@@ -11,15 +11,14 @@ namespace BLMS.Context
 {
     public class LoginDBContext
     {
-        readonly ConnectionSQL connectSQLLogin = new ConnectionSQL();
-        readonly LogDBContext LogDbContext = new LogDBContext();
+        readonly ConnectionSQL connectSQL = new ConnectionSQL();
 
         //GET USER DETAILS FOR AUTHENTICATION
         public User GetUserByEmail(string STAFF_EMAIL)
         {
             var user = new User();
 
-            Models.Connection connection = connectSQLLogin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {

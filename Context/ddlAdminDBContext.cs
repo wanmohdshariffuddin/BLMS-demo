@@ -9,8 +9,7 @@ namespace BLMS.Context
 {
     public class ddlAdminDBContext
     {
-        readonly ConnectionSQL connectSQLDDLAdmin = new ConnectionSQL();
-        readonly LogDBContext LogDbContext = new LogDBContext();
+        readonly ConnectionSQL connectSQL = new ConnectionSQL();
 
         #region BUSINESS UNIT
         #region GET BUSINESS DIVISION
@@ -18,7 +17,7 @@ namespace BLMS.Context
         {
             var businessUnitList = new List<BusinessUnit>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -51,7 +50,7 @@ namespace BLMS.Context
         {
             var staffNamePICList = new List<PIC>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -82,7 +81,7 @@ namespace BLMS.Context
         {
             var userTypePICList = new List<PIC>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -115,7 +114,7 @@ namespace BLMS.Context
         {
             var staffNameUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -146,7 +145,7 @@ namespace BLMS.Context
         {
             var roleUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -177,7 +176,7 @@ namespace BLMS.Context
         {
             var userTypeUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -200,27 +199,6 @@ namespace BLMS.Context
             }
 
             return userTypeUserRoleList;
-        }
-        #endregion
-
-        #region ddlUserTypeLinkedRole
-        public DataSet ddlUserTypeLinkedRole(int RoleID)
-        {
-            Models.Connection connection = connectSQLDDLAdmin.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spDDLUserTypeLinkedRole", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@RoleID", RoleID);
-
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataSet ds = new DataSet();
-                da.Fill(ds);
-                return ds;
-            }
         }
         #endregion
         #endregion

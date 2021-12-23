@@ -12,8 +12,7 @@ namespace BLMS.Context
 {
     public class LicenseDBContext
     {
-        readonly ConnectionSQL connectSQLLicense = new ConnectionSQL();
-        readonly LogDBContext LogDbContext = new LogDBContext();
+        readonly ConnectionSQL connectSQL = new ConnectionSQL();
 
         #region LICENSE SITE
         #region GRIDVIEW
@@ -23,7 +22,7 @@ namespace BLMS.Context
 
             var licenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -69,7 +68,7 @@ namespace BLMS.Context
         #region REGISTER
         public void RegisterLicenseSite(LicenseSite licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -104,7 +103,7 @@ namespace BLMS.Context
         #region RENEWAL
         public void RenewalLicenseSite(RenewalLicenseSiteViewModel licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -142,7 +141,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -205,7 +204,7 @@ namespace BLMS.Context
 
             var licenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -258,7 +257,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -287,7 +286,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -315,7 +314,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseSite(LicenseSite licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -353,7 +352,7 @@ namespace BLMS.Context
         {
             var licenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -405,7 +404,7 @@ namespace BLMS.Context
         //License Request
         public void RequestLicenseHQ(LicenseHQ licenseHQ, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -436,7 +435,7 @@ namespace BLMS.Context
         {
             var licenseHQ = new LicenseHQ();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -506,7 +505,7 @@ namespace BLMS.Context
 
             var licenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -560,7 +559,7 @@ namespace BLMS.Context
         {
             var licenseHQ = new LicenseHQ();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -593,7 +592,7 @@ namespace BLMS.Context
 
             var licenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -646,7 +645,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseHQRequest(LicenseAdmin LicenseAdmin, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -676,7 +675,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseHQRegister(LicenseAdmin LicenseAdmin, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -708,7 +707,7 @@ namespace BLMS.Context
         {
             var licenseAdmin = new LicenseAdmin();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -780,7 +779,7 @@ namespace BLMS.Context
         {
             var licenseAdmin = new LicenseAdmin();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -805,9 +804,9 @@ namespace BLMS.Context
         #endregion
 
         #region REGISTER LICENSE HQ
-        public void RegisterLicenseHQ(LicenseAdmin licenseAdmin, string UserName)
+        public void RegisterLicenseHQ(LicenseAdmin licenseAdmin, string Issued, string Expired, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -822,8 +821,8 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("LicenseName", licenseAdmin.LicenseName);
                 cmd.Parameters.AddWithValue("RegistrationNo", licenseAdmin.RegistrationNo);
                 cmd.Parameters.AddWithValue("SerialNo", licenseAdmin.SerialNo);
-                cmd.Parameters.AddWithValue("IssuedDT", licenseAdmin.IssuedDT);
-                cmd.Parameters.AddWithValue("ExpiredDT", licenseAdmin.ExpiredDT);
+                cmd.Parameters.AddWithValue("IssuedDT", Issued);
+                cmd.Parameters.AddWithValue("ExpiredDT", Expired);
                 cmd.Parameters.AddWithValue("PIC1Name", licenseAdmin.PIC1Name);
                 cmd.Parameters.AddWithValue("PIC2StaffNo", licenseAdmin.PIC2StaffNo);
                 cmd.Parameters.AddWithValue("PIC3StaffNo", licenseAdmin.PIC3StaffNo);
@@ -847,7 +846,7 @@ namespace BLMS.Context
 
             var licenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -896,9 +895,9 @@ namespace BLMS.Context
         #endregion
 
         #region RENEWAL LICENSE HQ
-        public void RenewalLicenseHQ(RenewalLicenseHQViewModel licenseAdmin, string UserName)
+        public void RenewalLicenseHQ(RenewalLicenseHQViewModel licenseAdmin, string Issued, string Expired, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -912,8 +911,8 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("LicenseName", licenseAdmin.RenewalLicense.LicenseName);
                 cmd.Parameters.AddWithValue("RegistrationNo", licenseAdmin.RenewalLicense.NewRegistrationNo);
                 cmd.Parameters.AddWithValue("SerialNo", licenseAdmin.RenewalLicense.NewSerialNo);
-                cmd.Parameters.AddWithValue("IssuedDT", licenseAdmin.RenewalLicense.NewIssuedDT);
-                cmd.Parameters.AddWithValue("ExpiredDT", licenseAdmin.RenewalLicense.NewExpiredDT);
+                cmd.Parameters.AddWithValue("IssuedDT", Issued);
+                cmd.Parameters.AddWithValue("ExpiredDT", Expired);
                 cmd.Parameters.AddWithValue("PIC1Name", licenseAdmin.RenewalLicense.NewPIC1Name);
                 cmd.Parameters.AddWithValue("PIC2StaffNo", licenseAdmin.RenewalLicense.NewPIC2StaffNo);
                 cmd.Parameters.AddWithValue("PIC3StaffNo", licenseAdmin.RenewalLicense.NewPIC3StaffNo);
@@ -939,7 +938,7 @@ namespace BLMS.Context
 
             var licenseApprovalList = new List<LicenseApproval>();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -985,7 +984,7 @@ namespace BLMS.Context
         {
             var licenseApproval = new LicenseApproval();
 
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1040,7 +1039,7 @@ namespace BLMS.Context
         #region CONFIRM APPROVE
         public void ApproveLicense(int Id, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1060,7 +1059,7 @@ namespace BLMS.Context
         #region CONFIRM REJECT
         public void RejectLicense(int Id, string Remarks, string UserName)
         {
-            Models.Connection connection = connectSQLLicense.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {

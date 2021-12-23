@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLMS.Context
 {
     public class AdminDBContext
     {
-        readonly ConnectionSQL connectSQLAdmin = new ConnectionSQL();
-        readonly LogDBContext LogDbContext = new LogDBContext();
+        readonly ConnectionSQL connectSQL = new ConnectionSQL();
 
         #region BUSINESS DIVISION
         #region GRIDVIEW
@@ -18,7 +19,7 @@ namespace BLMS.Context
         {
             var businessDivList = new List<BusinessDiv>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -48,9 +49,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddBusinessDiv(BusinessDiv businessDiv, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -62,18 +61,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "CREATE";
-                auditLog.ScreenPath = "BUSINESS DIVISION";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "-";
-                auditLog.NewValue = "'Division Name': " + businessDiv.DivName;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -82,9 +69,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditBusinessDiv(BusinessDiv businessDiv, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -97,29 +82,15 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "EDIT";
-                auditLog.ScreenPath = "BUSINESS DIVISION";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Division Name': " + businessDiv.OldDivName;
-                auditLog.NewValue = "'Division Name': " + businessDiv.DivName;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
         #endregion
 
         #region DELETE
-        public void DeleteBusinessDiv(int? id, string DivName, string UserName)
+        public void DeleteBusinessDiv(int? id)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -130,18 +101,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("DivID", id);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "DELETE";
-                auditLog.ScreenPath = "BUSINESS DIVISION";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Division Name': " + DivName;
-                auditLog.NewValue = "-";
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -152,7 +111,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -184,7 +143,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -213,7 +172,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -244,7 +203,7 @@ namespace BLMS.Context
         {
             var businessUnitList = new List<BusinessUnit>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -275,9 +234,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddBusinessUnit(BusinessUnit businessUnit, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -292,18 +249,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "CREATE";
-                auditLog.ScreenPath = "BUSINESS UNIT";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "-";
-                auditLog.NewValue = "'Div Name': " + businessUnit.DivName + ", 'Unit Name': " + businessUnit.UnitName + ", 'HoC Name': " + businessUnit.HoCName + ", 'HoC Email': " + businessUnit.HoCEmail;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -312,9 +257,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditBusinessUnit(BusinessUnit businessUnit, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -330,29 +273,15 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "EDIT";
-                auditLog.ScreenPath = "BUSINESS UNIT";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Div Name': " + businessUnit.DivName + ", 'Unit Name': " + businessUnit.OldUnitName + ", 'HoC Name': " + businessUnit.OldHoCName + ", 'HoC Email': " + businessUnit.OldHoCEmail;
-                auditLog.NewValue = "'Div Name': " + businessUnit.DivName + ", 'Unit Name': " + businessUnit.UnitName + ", 'HoC Name': " + businessUnit.HoCName + ", 'HoC Email': " + businessUnit.HoCEmail;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
         #endregion
 
         #region DELETE
-        public void DeleteBusinessUnit(int? id, string UnitName, string UserName)
+        public void DeleteBusinessUnit(int? id)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -363,18 +292,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UnitID", id);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "DELETE";
-                auditLog.ScreenPath = "BUSINESS UNIT";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Unit Name': " + UnitName;
-                auditLog.NewValue = "-";
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -385,7 +302,7 @@ namespace BLMS.Context
         {
             var businessUnit = new BusinessUnit();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -424,7 +341,7 @@ namespace BLMS.Context
         {
             var businessUnit = new BusinessUnit();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -456,7 +373,7 @@ namespace BLMS.Context
         {
             var CertBodyList = new List<CertBody>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -485,9 +402,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddCertBody(CertBody certBody, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -499,18 +414,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "CREATE";
-                auditLog.ScreenPath = "CERTIFICATE BODY";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "-";
-                auditLog.NewValue = "'Certificate Body Name': " + certBody.CertBodyName;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -519,9 +422,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditCertBody(CertBody certBody, string UserName)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -534,29 +435,15 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("UserName", UserName);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "CREATE";
-                auditLog.ScreenPath = "CERTIFICATE BODY";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Certificate Body Name': " + certBody.OldCertBodyName;
-                auditLog.NewValue = "'Certificate Body Name': " + certBody.CertBodyName;
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
         #endregion
 
         #region DELETE
-        public void DeleteCertBody(int? id, string CertBodyName, string UserName)
+        public void DeleteCertBody(int? id)
         {
-            AuditLog auditLog = new AuditLog();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -567,18 +454,6 @@ namespace BLMS.Context
                 cmd.Parameters.AddWithValue("CertBodyID", id);
 
                 cmd.ExecuteNonQuery();
-
-                #region AUDIT
-                auditLog.Command = "DELETE";
-                auditLog.ScreenPath = "CERTIFICATE BODY";
-                auditLog.CreatedBy = UserName;
-                auditLog.SPName = cmd.CommandText.ToString();
-                auditLog.OldValue = "'Certificate Body Name': " + CertBodyName;
-                auditLog.NewValue = "-";
-
-                LogDbContext.AddAuditLog(auditLog);
-                #endregion
-
                 conn.Close();
             }
         }
@@ -589,7 +464,7 @@ namespace BLMS.Context
         {
             var certBody = new CertBody();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -621,7 +496,7 @@ namespace BLMS.Context
         {
             var certBody = new CertBody();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -652,7 +527,7 @@ namespace BLMS.Context
         {
             var categoryList = new List<Category>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -682,7 +557,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddCategory(Category category, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -703,7 +578,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditCategory(Category category, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -725,7 +600,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteCategory(int? id)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -746,7 +621,7 @@ namespace BLMS.Context
         {
             var category = new Category();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -779,7 +654,7 @@ namespace BLMS.Context
         {
             var category = new Category();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -810,7 +685,7 @@ namespace BLMS.Context
         {
             var PICList = new List<PIC>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -844,7 +719,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddPIC(PIC pic, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -866,7 +741,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditPIC(PIC pic, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -889,7 +764,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeletePIC(int? id)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -910,7 +785,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -944,51 +819,12 @@ namespace BLMS.Context
         }
         #endregion
 
-        #region GET PIC BY NAME
-        public PIC GetPICByName(string PICName)
-        {
-            var pic = new PIC();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spPICGetByName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("PICName", PICName);
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    pic.PICID = Convert.ToInt32(dr["PICID"].ToString());
-                    pic.UserTypeID = Convert.ToInt32(dr["UserTypeID"].ToString());
-                    pic.PICStaffNo = dr["PICStaffNo"].ToString();
-                    pic.PICName = dr["PICName"].ToString();
-                    pic.PICEmail = dr["PICEmail"].ToString();
-                    pic.UserType = dr["UserType"].ToString();
-                    pic.ShortName = dr["ShortName"].ToString();
-
-                    pic.OldPICStaffNo = dr["PICStaffNo"].ToString();
-                    pic.OldShortName = dr["ShortName"].ToString();
-                    pic.OldUserTypeID = Convert.ToInt32(dr["UserTypeID"].ToString());
-                }
-
-                conn.Close();
-            }
-
-            return pic;
-        }
-        #endregion
-
         #region GET PIC NAME BY STAFF NO
         public PIC GetPICByStaffNo(string StaffNo)
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1020,7 +856,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1049,7 +885,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1080,7 +916,7 @@ namespace BLMS.Context
         {
             var UserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1114,7 +950,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddUserRole(UserRole userRole, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1137,7 +973,7 @@ namespace BLMS.Context
         //Edit User Role
         public void EditUserRole(UserRole userRole, string UserName)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1161,7 +997,7 @@ namespace BLMS.Context
         //Delete User Role
         public void DeleteUserRole(int? id)
         {
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1182,7 +1018,7 @@ namespace BLMS.Context
         {
             var UserRole = new UserRole();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1223,7 +1059,7 @@ namespace BLMS.Context
         {
             var userRole = new UserRole();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1252,7 +1088,7 @@ namespace BLMS.Context
         {
             var userRole = new UserRole();
 
-            Models.Connection connection = connectSQLAdmin.GetConnection();
+            Models.Connection connection = connectSQL.GetConnection();
 
             using (SqlConnection conn = new SqlConnection(connection.connectionstring))
             {
@@ -1267,35 +1103,6 @@ namespace BLMS.Context
                 while (dr.Read())
                 {
                     userRole.UserRoleName = dr["UserRoleName"].ToString();
-                }
-
-                conn.Close();
-            }
-
-            return userRole;
-        }
-        #endregion
-
-        #region GET USER ROLE BY NAME
-        public UserRole GetUserRoleByName(string UserRoleName)
-        {
-            var userRole = new UserRole();
-
-            Models.Connection connection = connectSQLAdmin.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("spUserRoleGetRole", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("UserRoleName", UserRoleName);
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    userRole.Role = dr["UserRole"].ToString();
                 }
 
                 conn.Close();

@@ -12,7 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Report\" />
+    <Compile Remove="Models\Report\**" />
+    <Content Remove="Models\Report\**" />
+    <EmbeddedResource Remove="Models\Report\**" />
+    <None Remove="Models\Report\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
