@@ -36,6 +36,10 @@ jobs:
           dotnet-version: '5.0.x'
       - name: Install dependencies
         run: dotnet restore
+      - name: Uninstall dotnet-sonarscanner
+        run: dotnet tool uninstall --global dotnet-sonarscanner
+      - mame: Install dotnet-sonarscanner
+        run: dotnet tool install --global dotnet-sonarscanner
       - name: Sonarqube Begin
         run: dotnet sonarscanner begin /k:${{ secrets.SONAR_PROJECT_KEY }} /d:sonar.host.url=${{ secrets.SONAR_HOST_URL}} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
       - name: Build
