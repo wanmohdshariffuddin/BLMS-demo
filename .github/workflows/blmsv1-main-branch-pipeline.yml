@@ -37,9 +37,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Sonarqube Begin
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:${{ secrets.SONAR_PROJECT_KEY }} /d:sonar.host.url=${{ secrets.SONAR_HOST_URL}} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+        run: dotnet sonarscanner begin /k:${{ secrets.SONAR_PROJECT_KEY }} /d:sonar.host.url=${{ secrets.SONAR_HOST_URL}} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
       - name: Build
         run: dotnet build
       - name: Test with the dotnet CLI
