@@ -1,0 +1,48 @@
+﻿name: blmsv1-main-branch-pipeline
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  build-and-test:
+    name: Build and Test DotNet Core Application
+    runs-on: [self-hosted, onprem]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK 
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+
+  run-sonarqube-scan:
+    name: Run SonarQube Code Quality and Security Scan
+    runs-on: [self-hosted, onprem]
+
+    steps:
+      - uses: actions/checkout@v2.2.0
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of sonarqube reporting
+          fetch-depth: 0
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Sonarqube Begin
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet sonarscanner begin /k:${{ secrets.SONAR_PROJECT_KEY }} /d:sonar.host.url=${{ secrets.SONAR_HOST_URL}} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+      - name: Build
+        run: dotnet build
+      - name: Test with the dotnet CLI
+        run: dotnet test --settings coverlet.runsettings --logger:trx
+      - name: Sonarqube end
+        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

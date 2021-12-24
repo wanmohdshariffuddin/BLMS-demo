@@ -1,8 +1,0 @@
-﻿name: blmsv1-pipeline
-on: [push]
-jobs:
-  hello-world:
-    runs-on: [self-hosted, onprem]
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo "Hello, World!" 
