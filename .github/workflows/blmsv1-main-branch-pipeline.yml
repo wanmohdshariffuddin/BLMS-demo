@@ -56,10 +56,11 @@ jobs:
         uses: actions/checkout@v2.2.0
       - name: set KUBECONFIG
         run: |
-          touch ./dev-kube-config.yml
-          'echo "$KUBE_CONFIG" > ./dev-kube-config.yml'
-          export KUBECONFIG=./dev-kube-config.yml
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DEV }}
+          ls ./kube_config
+          gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.GPG_PASSPHRASE }} --output ./kube_config/blms-dev-github-sa-kubeconfig.yml ./kube_config/blms-dev-github-sa-kubeconfig.yml.gpg
+          ls ./kube_config
       - name: Deploy application to Dev kubernetes cluster
-        run: kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
+        run: |
+          ls ./kube_config
+          export KUBECONFIG=./kubeconfig/blms-dev-github-sa-kubeconfig.yml
+          kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
