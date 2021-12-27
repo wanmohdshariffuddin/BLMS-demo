@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blms-deployment
+  labels:
+    app: blms-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: blms
+  template:
+    metadata:
+      labels:
+        app: blms
+    spec:
+      containers:
+      - name: blms
+        image: uemdevopsid/blms:720b5b8167012436c601d745460e57fd079b940a
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blms-service
+spec:
+  selector:
+    app: blms
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blms-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: "blms.uemedgenta-dev.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: blms-service
+            port:
+              number: 80
