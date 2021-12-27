@@ -54,13 +54,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.2.0
-      - name: set KUBECONFIG
+      - name: Decrypt kube_config file
         run: |
-          ls ./kube_config
           gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.GPG_PASSPHRASE }} --output ./kube_config/blms-dev-github-sa-kubeconfig.yml ./kube_config/blms-dev-github-sa-kubeconfig.yml.gpg
           ls ./kube_config
       - name: Deploy application to Dev kubernetes cluster
         run: |
-          ls ./kube_config
-          export KUBECONFIG=./kubeconfig/blms-dev-github-sa-kubeconfig.yml
+          export KUBECONFIG=./kube_config/blms-dev-github-sa-kubeconfig.yml
           kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
