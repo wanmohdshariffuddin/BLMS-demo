@@ -58,6 +58,10 @@ jobs:
         run: |
           gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.GPG_PASSPHRASE }} --output ./kube_config/blms-dev-github-sa-kubeconfig.yml ./kube_config/blms-dev-github-sa-kubeconfig.yml.gpg
           ls ./kube_config
+      - name: Create Database Connection String Secret
+        run: |
+          export KUBECONFIG=./kube_config/blms-dev-github-sa-kubeconfig.yml
+          kubectl create secret generic blms-db-connstr -n tech-coe-dev --from-literal=SQLCONNSTR_DBConnection=${{ secrets.DEV_DBCONNECTION }} --dry-run=client -o=yaml | kubectl apply -f -
       - name: Deploy application to Dev kubernetes cluster
         run: |
           export KUBECONFIG=./kube_config/blms-dev-github-sa-kubeconfig.yml
