@@ -3,3 +3,4 @@ obj/
 .sonarqube/
 
 .vs/
+out/
