@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.Admin;
+﻿using BLMS.Models.Admin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,17 +10,13 @@ namespace BLMS.Context
 {
     public class LogDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region AUDIT
         #region GRIDVIEW
         public IEnumerable<AuditLog> GetAuditLog()
         {
             var AuditLogList = new List<AuditLog>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuditLogGetAll", conn);
@@ -58,9 +53,7 @@ namespace BLMS.Context
         {
             var ErrorLogList = new List<ErrorLog>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spErrorLogGetAll", conn);

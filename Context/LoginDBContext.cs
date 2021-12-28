@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models;
+﻿using BLMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,16 +10,12 @@ namespace BLMS.Context
 {
     public class LoginDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         //GET USER DETAILS FOR AUTHENTICATION
         public User GetUserByEmail(string STAFF_EMAIL)
         {
             var user = new User();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserGetbyEmail", conn);

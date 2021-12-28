@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.Admin;
+﻿using BLMS.Models.Admin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,17 +10,13 @@ namespace BLMS.Context
 {
     public class AdminDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region BUSINESS DIVISION
         #region GRIDVIEW
         public IEnumerable<BusinessDiv> BusinessDivGetAll()
         {
             var businessDivList = new List<BusinessDiv>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivGetAll", conn);
@@ -49,9 +44,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddBusinessDiv(BusinessDiv businessDiv, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivAdd", conn);
@@ -69,9 +62,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditBusinessDiv(BusinessDiv businessDiv, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivEdit", conn);
@@ -90,9 +81,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteBusinessDiv(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivDelete", conn);
@@ -111,9 +100,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivGetById", conn);
@@ -143,9 +130,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivCheck", conn);
@@ -172,9 +157,7 @@ namespace BLMS.Context
         {
             var businessDiv = new BusinessDiv();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessDivCheckLinkedBusinessUnit", conn);
@@ -203,9 +186,7 @@ namespace BLMS.Context
         {
             var businessUnitList = new List<BusinessUnit>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitGetAll", conn);
@@ -234,9 +215,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddBusinessUnit(BusinessUnit businessUnit, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitAdd", conn);
@@ -257,9 +236,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditBusinessUnit(BusinessUnit businessUnit, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitEdit", conn);
@@ -281,9 +258,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteBusinessUnit(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitDelete", conn);
@@ -302,9 +277,7 @@ namespace BLMS.Context
         {
             var businessUnit = new BusinessUnit();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitGetById", conn);
@@ -341,9 +314,7 @@ namespace BLMS.Context
         {
             var businessUnit = new BusinessUnit();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spBusinessUnitCheck", conn);
@@ -373,9 +344,7 @@ namespace BLMS.Context
         {
             var CertBodyList = new List<CertBody>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyGetAll", conn);
@@ -402,9 +371,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddCertBody(CertBody certBody, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyAdd", conn);
@@ -422,9 +389,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditCertBody(CertBody certBody, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyEdit", conn);
@@ -443,9 +408,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteCertBody(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyDelete", conn);
@@ -464,9 +427,7 @@ namespace BLMS.Context
         {
             var certBody = new CertBody();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyGetById", conn);
@@ -496,9 +457,7 @@ namespace BLMS.Context
         {
             var certBody = new CertBody();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCertBodyCheck", conn);
@@ -527,9 +486,7 @@ namespace BLMS.Context
         {
             var categoryList = new List<Category>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryGetAll", conn);
@@ -557,9 +514,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddCategory(Category category, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryAdd", conn);
@@ -578,9 +533,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditCategory(Category category, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryEdit", conn);
@@ -600,9 +553,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteCategory(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryDelete", conn);
@@ -621,9 +572,7 @@ namespace BLMS.Context
         {
             var category = new Category();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryGetById", conn);
@@ -654,9 +603,7 @@ namespace BLMS.Context
         {
             var category = new Category();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spCategoryCheck", conn);
@@ -685,9 +632,7 @@ namespace BLMS.Context
         {
             var PICList = new List<PIC>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICGetAll", conn);
@@ -719,9 +664,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddPIC(PIC pic, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICAdd", conn);
@@ -741,9 +684,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditPIC(PIC pic, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICEdit", conn);
@@ -764,9 +705,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeletePIC(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICDelete", conn);
@@ -785,9 +724,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICGetById", conn);
@@ -824,9 +761,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICGetByStaffNo", conn);
@@ -856,9 +791,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICCheck", conn);
@@ -885,9 +818,7 @@ namespace BLMS.Context
         {
             var pic = new PIC();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spPICShortNameCheck", conn);
@@ -915,10 +846,8 @@ namespace BLMS.Context
         public IEnumerable<UserRole> UserRoleGetAll()
         {
             var UserRoleList = new List<UserRole>();
-
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleGetAll", conn);
@@ -950,9 +879,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddUserRole(UserRole userRole, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleAdd", conn);
@@ -973,9 +900,7 @@ namespace BLMS.Context
         //Edit User Role
         public void EditUserRole(UserRole userRole, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleEdit", conn);
@@ -997,9 +922,7 @@ namespace BLMS.Context
         //Delete User Role
         public void DeleteUserRole(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleDelete", conn);
@@ -1018,9 +941,7 @@ namespace BLMS.Context
         {
             var UserRole = new UserRole();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleGetById", conn);
@@ -1059,9 +980,7 @@ namespace BLMS.Context
         {
             var userRole = new UserRole();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleCheck", conn);
@@ -1088,9 +1007,7 @@ namespace BLMS.Context
         {
             var userRole = new UserRole();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spUserRoleGetName", conn);

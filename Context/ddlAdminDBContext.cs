@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.Admin;
+﻿using BLMS.Models.Admin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,17 +8,13 @@ namespace BLMS.Context
 {
     public class ddlAdminDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region BUSINESS UNIT
         #region GET BUSINESS DIVISION
         public IEnumerable<BusinessUnit> ddlBusinessDiv()
         {
             var businessUnitList = new List<BusinessUnit>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessDiv", conn);
@@ -50,9 +45,7 @@ namespace BLMS.Context
         {
             var staffNamePICList = new List<PIC>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaff", conn);
@@ -81,9 +74,7 @@ namespace BLMS.Context
         {
             var userTypePICList = new List<PIC>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLPICUserType", conn);
@@ -114,9 +105,7 @@ namespace BLMS.Context
         {
             var staffNameUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaff", conn);
@@ -145,9 +134,7 @@ namespace BLMS.Context
         {
             var roleUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLRole", conn);
@@ -176,9 +163,7 @@ namespace BLMS.Context
         {
             var userTypeUserRoleList = new List<UserRole>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLUserType", conn);

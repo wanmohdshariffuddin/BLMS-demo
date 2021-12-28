@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.SOP;
+﻿using BLMS.Models.SOP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,17 +10,13 @@ namespace BLMS.Context
 {
     public class SOPDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region AUTHORITY LINK
         #region GRIDVIEW
         public IEnumerable<Authority> AuthorityGetAll()
         {
             var authorityList = new List<Authority>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkGetAll", conn);
@@ -50,9 +45,7 @@ namespace BLMS.Context
         #region CREATE
         public void AddAuthority(Authority authority, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkAdd", conn);
@@ -71,9 +64,7 @@ namespace BLMS.Context
         #region EDIT
         public void EditAuthority(Authority authority, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkEdit", conn);
@@ -93,9 +84,7 @@ namespace BLMS.Context
         #region DELETE
         public void DeleteAuthority(int? id)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkDelete", conn);
@@ -114,9 +103,7 @@ namespace BLMS.Context
         {
             var authority = new Authority();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkGetById", conn);
@@ -147,9 +134,7 @@ namespace BLMS.Context
         {
             var authority = new Authority();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spAuthorityLinkCheck", conn);

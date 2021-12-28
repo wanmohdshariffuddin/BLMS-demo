@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.License;
+﻿using BLMS.Models.License;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,16 +8,12 @@ namespace BLMS.Context
 {
     public class AllUserDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region GRIDVIEW
         public IEnumerable<LicenseAllUser> LicenseAllUserGetAll()
         {
             var licenseAllUserList = new List<LicenseAllUser>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("splicenseAllUserGetAll", conn);
@@ -66,9 +61,7 @@ namespace BLMS.Context
         {
             var licenseAllUser = new LicenseAllUser();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseAllUserGetById", conn);

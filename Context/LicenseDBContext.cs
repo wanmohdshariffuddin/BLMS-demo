@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.License;
+﻿using BLMS.Models.License;
 using BLMS.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,8 +11,6 @@ namespace BLMS.Context
 {
     public class LicenseDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region LICENSE SITE
         #region GRIDVIEW
         public IEnumerable<LicenseSite> LicenseSiteGetAll()
@@ -22,9 +19,7 @@ namespace BLMS.Context
 
             var licenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteGetAll", conn);
@@ -68,9 +63,7 @@ namespace BLMS.Context
         #region REGISTER
         public void RegisterLicenseSite(LicenseSite licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteRegister", conn);
@@ -103,9 +96,7 @@ namespace BLMS.Context
         #region RENEWAL
         public void RenewalLicenseSite(RenewalLicenseSiteViewModel licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteRenewal", conn);
@@ -141,9 +132,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteGetById", conn);
@@ -204,9 +193,7 @@ namespace BLMS.Context
 
             var licenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteGetLog", conn);
@@ -257,9 +244,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteCheck", conn);
@@ -286,9 +271,7 @@ namespace BLMS.Context
         {
             var licenseSite = new LicenseSite();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteFileCheck", conn);
@@ -314,9 +297,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseSite(LicenseSite licenseSite, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseSiteEdit", conn);
@@ -352,9 +333,7 @@ namespace BLMS.Context
         {
             var licenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 var counter = 1;
 
@@ -404,9 +383,8 @@ namespace BLMS.Context
         //License Request
         public void RequestLicenseHQ(LicenseHQ licenseHQ, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQRequest", conn);
@@ -435,9 +413,7 @@ namespace BLMS.Context
         {
             var licenseHQ = new LicenseHQ();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQGetById", conn);
@@ -505,9 +481,7 @@ namespace BLMS.Context
 
             var licenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQGetLog", conn);
@@ -559,9 +533,7 @@ namespace BLMS.Context
         {
             var licenseHQ = new LicenseHQ();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQCheck", conn);
@@ -592,9 +564,7 @@ namespace BLMS.Context
 
             var licenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseAdminGetAll", conn);
@@ -645,9 +615,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseHQRequest(LicenseAdmin LicenseAdmin, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQReqEdit", conn);
@@ -675,9 +643,7 @@ namespace BLMS.Context
         //License Request
         public void EditLicenseHQRegister(LicenseAdmin LicenseAdmin, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQRegEdit", conn);
@@ -707,9 +673,7 @@ namespace BLMS.Context
         {
             var licenseAdmin = new LicenseAdmin();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseAdminGetById", conn);
@@ -779,9 +743,7 @@ namespace BLMS.Context
         {
             var licenseAdmin = new LicenseAdmin();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQCheck", conn);
@@ -806,9 +768,7 @@ namespace BLMS.Context
         #region REGISTER LICENSE HQ
         public void RegisterLicenseHQ(LicenseAdmin licenseAdmin, string Issued, string Expired, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQRegister", conn);
@@ -846,9 +806,7 @@ namespace BLMS.Context
 
             var licenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseAdminGetLog", conn);
@@ -897,9 +855,7 @@ namespace BLMS.Context
         #region RENEWAL LICENSE HQ
         public void RenewalLicenseHQ(RenewalLicenseHQViewModel licenseAdmin, string Issued, string Expired, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQRenewal", conn);
@@ -938,9 +894,7 @@ namespace BLMS.Context
 
             var licenseApprovalList = new List<LicenseApproval>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseApprovalGetAll", conn);
@@ -984,9 +938,7 @@ namespace BLMS.Context
         {
             var licenseApproval = new LicenseApproval();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseApprovalGetById", conn);
@@ -1039,9 +991,8 @@ namespace BLMS.Context
         #region CONFIRM APPROVE
         public void ApproveLicense(int Id, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQApprove", conn);
@@ -1059,9 +1010,8 @@ namespace BLMS.Context
         #region CONFIRM REJECT
         public void RejectLicense(int Id, string Remarks, string UserName)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spLicenseHQReject", conn);

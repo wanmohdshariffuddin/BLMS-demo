@@ -1,5 +1,4 @@
-﻿using BLMS.Connection;
-using BLMS.Models.License;
+﻿using BLMS.Models.License;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,17 +10,13 @@ namespace BLMS.Context
 {
     public class ddlLicenseDBContext
     {
-        readonly ConnectionSQL connectSQL = new ConnectionSQL();
-
         #region LICENSE SITE
         #region ddlCategory
         public IEnumerable<LicenseSite> ddlCategoryLicenseSite()
         {
             var categoryLicenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLCategory", conn);
@@ -50,9 +45,7 @@ namespace BLMS.Context
         {
             var businessDivLicenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessDiv", conn);
@@ -81,9 +74,7 @@ namespace BLMS.Context
         {
             var businessUnitLicenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnit", conn);
@@ -112,9 +103,7 @@ namespace BLMS.Context
         {
             var pic2LicenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffSite", conn);
@@ -143,9 +132,7 @@ namespace BLMS.Context
         {
             var pic3LicenseSiteList = new List<LicenseSite>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffSite", conn);
@@ -172,9 +159,8 @@ namespace BLMS.Context
         #region ddlBusinessUnitLinkedDivSite
         public DataSet ddlBusinessUnitLinkedDivSite(int DivID)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnitLinkedDiv", conn);
@@ -197,9 +183,7 @@ namespace BLMS.Context
         {
             var categoryLicenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLCategory", conn);
@@ -228,9 +212,7 @@ namespace BLMS.Context
         {
             var businessDivLicenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessDiv", conn);
@@ -259,9 +241,7 @@ namespace BLMS.Context
         {
             var businessUnitLicenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnit", conn);
@@ -290,9 +270,7 @@ namespace BLMS.Context
         {
             var pic2LicenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffHQ", conn);
@@ -321,9 +299,7 @@ namespace BLMS.Context
         {
             var pic3LicenseHQList = new List<LicenseHQ>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffHQ", conn);
@@ -350,9 +326,8 @@ namespace BLMS.Context
         #region ddlBusinessUnitLinkedDivHQ
         public DataSet ddlBusinessUnitLinkedDivHQ(int DivID)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnitLinkedDiv", conn);
@@ -375,9 +350,7 @@ namespace BLMS.Context
         {
             var categoryLicenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLCategory", conn);
@@ -406,9 +379,7 @@ namespace BLMS.Context
         {
             var businessDivLicenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessDiv", conn);
@@ -437,9 +408,7 @@ namespace BLMS.Context
         {
             var businessUnitLicenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnit", conn);
@@ -468,9 +437,7 @@ namespace BLMS.Context
         {
             var pic2LicenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffHQ", conn);
@@ -499,9 +466,7 @@ namespace BLMS.Context
         {
             var pic3LicenseAdminList = new List<LicenseAdmin>();
 
-            Models.Connection connection = connectSQL.GetConnection();
-
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLStaffHQ", conn);
@@ -528,9 +493,8 @@ namespace BLMS.Context
         #region ddlBusinessUnitLinkedDivAdmin
         public DataSet ddlBusinessUnitLinkedDivAdmin(int DivID)
         {
-            Models.Connection connection = connectSQL.GetConnection();
 
-            using (SqlConnection conn = new SqlConnection(connection.connectionstring))
+            using (SqlConnection conn = new SqlConnection(Startup.connectionstring))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("spDDLBusinessUnitLinkedDiv", conn);

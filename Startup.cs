@@ -19,18 +19,24 @@ namespace BLMS
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public static string connectionstring { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CompetentDBContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DevServerConnection")));
+            //services.AddDbContext<CompetentDBContext>(options =>
+            //options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
+
+            //string conString = _configuration.GetConnectionString("Connection");
+            string conString = Environment.GetEnvironmentVariable("SQLCONNSTR_DBConnection");
+            connectionstring = conString;
 
             services.AddControllersWithViews();
 
@@ -78,13 +84,13 @@ namespace BLMS
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
+            else if(env.IsStaging() || env.IsProduction())
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
