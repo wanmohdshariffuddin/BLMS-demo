@@ -1,0 +1,22 @@
+﻿name: blmsv1-release-branch-pipeline
+on:
+  push:
+    branches:
+      - 'releases/**'
+jobs:
+  build-and-test:
+
+    runs-on: [self-hosted, azure]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK 
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: 5.0.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
