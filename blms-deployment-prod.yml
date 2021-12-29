@@ -56,8 +56,12 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
   namespace: tech-coe-prod
 spec:
+  tls:
+  - hosts:
+      - blms-prod.uemedgenta.com
+    secretName: blms-tls-secret
   rules:
-  - host: "blms-k8s.uemedgenta.com"
+  - host: "blms-prod.uemedgenta.com"
     http:
       paths:
       - path: /
@@ -67,3 +71,4 @@ spec:
             name: blms-service
             port:
               number: 80
+
