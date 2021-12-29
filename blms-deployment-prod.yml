@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: blms
-        image: uemdevopsid/blms:0.1
+        image: uemdevopsid/blms:<IMAGE_VERSION>
         ports:
         - containerPort: 80
         env:

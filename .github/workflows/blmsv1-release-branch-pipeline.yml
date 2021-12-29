@@ -44,3 +44,29 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/blms:${{ steps.extract_branch.outputs.branch }}
+
+  deploy-app-prod:
+    name: Deploy App to Prod Azure AKS Cluster
+    runs-on: [self-hosted, azure]
+    needs: [docker-build-and-push, build-and-test]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.2.0
+      - name: Decrypt kube_config file
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.GPG_PASSPHRASE }} --output ./kube_config/aks-its-app-github-action-sa.yml ./kube_config/aks-its-app-github-action-sa.yml.gpg
+          ls ./kube_config
+      - name: Create Database Connection String Secret
+        run: |
+          export KUBECONFIG=./kube_config/aks-its-app-github-action-sa.yml
+          kubectl create secret generic blms-db-connstr -n tech-coe-prod --from-literal=SQLCONNSTR_DBConnection=${{ secrets.PROD_DBCONNECTION }} --dry-run=client -o=yaml | kubectl apply -f -
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/releases/})"
+        id: extract_branch
+      - name: Deploy application to Prod kubernetes cluster
+        run: |
+          export KUBECONFIG=./kube_config/aks-its-app-github-action-sa.yml
+          sed -i "s/<IMAGE_VERSION>/${{ steps.extract_branch.outputs.branch }}/g" blms-deployment-prod.yml
+          kubectl -n tech-coe-prod apply -f blms-deployment-prod.yml
