@@ -57,7 +57,7 @@ metadata:
   namespace: tech-coe-dev
 spec:
   rules:
-  - host: "blms.uemedgenta-dev.com"
+  - host: "blms-dev.uemedgenta.com"
     http:
       paths:
       - path: /
