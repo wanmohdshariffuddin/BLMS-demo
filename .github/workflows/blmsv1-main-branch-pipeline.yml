@@ -4,6 +4,25 @@ push:
 branches:
 - 'main'
 jobs:
+build-and-test:
+name: Build and Test DotNet Core Application
+runs-on: [self-hosted, onprem]
+
+
+
+steps:
+- uses: actions/checkout@v2
+- name: Setup .NET Core SDK
+uses: actions/setup-dotnet@v1.7.2
+with:
+dotnet-version: 5.0.x
+- name: Install dependencies
+run: dotnet restore
+- name: Build
+run: dotnet build --configuration Release --no-restore
+- name: Test
+run: dotnet test --no-restore --verbosity normal
+
 #run-sonarqube-scan:
 #name: Run SonarQube Scan
 #runs-on: [self-hosted, onprem]
@@ -53,7 +72,7 @@ deploy-app-dev:
 name: Deploy App to Dev Rancher Cluster
 runs-on: [self-hosted, onprem]
 #needs: [docker-build-and-push, run-sonarqube-scan]
-needs: docker-build-and-push
+needs: [docker-build-and-push, build-and-test]
 
 
 steps:
