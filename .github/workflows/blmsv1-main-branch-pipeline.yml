@@ -59,7 +59,9 @@ jobs:
    - name: set KUBECONFIG
      run: |
       echo ${{ secrets.KUBE_CONFIG_DEV }} > ./dev-kube-config.yml
-      export KUBECONFIG=./dev-kube-config.yml
+      #export KUBECONFIG=./dev-kube-config.yml
+      export KUBECONFIG=./kube_config/blms-dev-github-sa-kubeconfig.yml
+      sed -i "s/<IMAGE_VERSION>/${{ github.sha }}/g" blms-deployment-dev.yml    
    - name: Deploy application to Dev kubernetes cluster
      run: kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
 
