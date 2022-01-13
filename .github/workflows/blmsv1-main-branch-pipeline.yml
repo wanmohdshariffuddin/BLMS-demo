@@ -25,8 +25,8 @@ jobs:
      run: dotnet build
    - name: Test with the dotnet CLI
      run: dotnet test --settings coverlet.runsettings --logger:trx
-   - name: Sonarqube end
-     run: dotnet /opt/sonar-scanner-msbuild-5.4.1.41282-net5.0/SonarScanner.MSBuild.dll end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+   #- name: Sonarqube end
+   #  run: dotnet /opt/sonar-scanner-msbuild-5.4.1.41282-net5.0/SonarScanner.MSBuild.dll end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
  docker-build-and-push:
   name: Docker Build And Push
