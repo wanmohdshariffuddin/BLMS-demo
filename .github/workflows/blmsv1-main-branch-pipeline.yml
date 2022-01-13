@@ -5,8 +5,8 @@ on:
       - 'main'
 jobs:
   run-sonarqube-scan:
-#    name: Run SonarQube Scan
-#    runs-on: [self-hosted, onprem]
+    name: Run SonarQube Scan
+    runs-on: [self-hosted, onprem]
 
 #    steps:
 #      - uses: actions/checkout@v2.2.0
