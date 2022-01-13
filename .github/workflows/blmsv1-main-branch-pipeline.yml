@@ -14,7 +14,7 @@ steps:
 - uses: actions/checkout@v2.2.0
 with:
 # Disabling shallow clone is recommended for improving relevancy of sonarqube reporting
-fetch-depth: 0
+# fetch-depth: 0
 - name: Setup dotnet
 uses: actions/setup-dotnet@v1
 with:
@@ -66,3 +66,5 @@ echo ${{ secrets.KUBE_CONFIG_DEV }} > ./dev-kube-config.yml
 export KUBECONFIG=./dev-kube-config.yml
 - name: Deploy application to Dev kubernetes cluster
 run: kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
+
+
