@@ -1,4 +1,5 @@
-﻿name: blmsv1-main-branch-pipeline
+﻿#disable sonarqube steps
+name: blmsv1-main-branch-pipeline
 on:
   push:
     branches:
