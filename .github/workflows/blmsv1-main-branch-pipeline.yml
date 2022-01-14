@@ -60,7 +60,6 @@ jobs:
      run: |
       export KUBECONFIG=/home/devopsteam/workspace/kube-configs/blms-dev-github-sa-kubeconfig.yml
       sed -i "s/<IMAGE_VERSION>/${{ github.sha }}/g" blms-deployment-dev.yml    
-   - name: Deploy application to Dev kubernetes cluster
-     run: kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
+      kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
 
 
