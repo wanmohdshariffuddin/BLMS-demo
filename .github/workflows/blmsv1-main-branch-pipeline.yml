@@ -1,4 +1,5 @@
-﻿name: blmsv1-main-branch-pipeline
+﻿#main-pipeline
+name: blmsv1-main-branch-pipeline
 on:
  push:
   branches:
