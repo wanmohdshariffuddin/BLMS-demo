@@ -59,7 +59,7 @@ spec:
   tls:
   - hosts:
       - blms-prod.uemedgenta.com
-    secretName: blms-tls-secret
+    secretName: blms-azhar-tls
   rules:
   - host: "blms-prod.uemedgenta.com"
     http:
