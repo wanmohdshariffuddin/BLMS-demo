@@ -28,7 +28,7 @@ jobs:
  deploy-app-dev:
   name: Deploy App to Dev Rancher Cluster
   runs-on: [self-hosted, onprem]
-  needs: [docker-build-and-push, run-sonarqube-scan]
+  needs: [docker-build-and-push]
 
   steps:
    - name: Checkout code
