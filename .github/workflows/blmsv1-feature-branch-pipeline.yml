@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-test:
 
-    runs-on: [self-hosted, onprem]
+    runs-on: ubuntu-latest
 
     steps:
       - run : echo "build and test"

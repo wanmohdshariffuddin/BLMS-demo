@@ -4,29 +4,23 @@ on:
     branches:
       - 'releases/**'
 jobs:
-  sonarqube-scan:
-    name: SonarQube Scan
-    runs-on: [self-hosted, onprem]
-
-    steps:
-     - run : echo "Run SonarQube scan"
 
   build-and-test:
-    runs-on: [self-hosted, azure]
+    runs-on: ubuntu-latest
 
     steps:
       - run : echo "build and test"
 
   docker-build-and-push:
     name: Docker Build And Push
-    runs-on: [self-hosted, azure]
+    runs-on: ubuntu-latest
 
     steps:
       - run : echo "Docker build and push"
 
   deploy-app-prod:
     name: Deploy App to Prod Azure AKS Cluster
-    runs-on: [self-hosted, azure]
+    runs-on: ubuntu-latest
     needs: [docker-build-and-push, build-and-test]
 
     steps:

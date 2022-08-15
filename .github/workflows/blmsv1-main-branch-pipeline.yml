@@ -7,21 +7,21 @@ on:
 jobs:
  sonarqube-scan:
   name: SonarQube Scan
-  runs-on: [self-hosted, onprem]
+  runs-on: ubuntu-latest
 
   steps:
    - run : echo "Run SonarQube scan"
 
  docker-build-and-push:
   name: Docker Build And Push
-  runs-on: [self-hosted, onprem]
+  runs-on: ubuntu-latest
 
   steps:
    - run: echo "Docker build and push"
 
  deploy-app-dev:
   name: Deploy App to Dev Rancher Cluster
-  runs-on: [self-hosted, onprem]
+  runs-on: ubuntu-latest
   needs: [docker-build-and-push]
 
   steps:
