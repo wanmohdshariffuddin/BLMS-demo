@@ -5,25 +5,19 @@ on:
   branches:
    - 'main'
 jobs:
+ sonarqube-scan:
+  name: SonarQube Scan
+  runs-on: [self-hosted, onprem]
+
+  steps:
+   - run : echo "Run SonarQube scan"
+
  docker-build-and-push:
   name: Docker Build And Push
   runs-on: [self-hosted, onprem]
 
   steps:
-   - name: Checkout code
-     uses: actions/checkout@v2.2.0
-   - name: Set up Docker Buildx
-     uses: docker/setup-buildx-action@v1
-   - name: Login to DockerHub
-     uses: docker/login-action@v1
-     with:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-   - name: Build and push
-     uses: docker/build-push-action@v2
-     with:
-      push: true
-      tags: ${{ secrets.DOCKERHUB_USERNAME }}/blms:${{ github.sha }}
+   - run: echo "Docker build and push"
 
  deploy-app-dev:
   name: Deploy App to Dev Rancher Cluster
@@ -31,12 +25,6 @@ jobs:
   needs: [docker-build-and-push]
 
   steps:
-   - name: Checkout code
-     uses: actions/checkout@v2.2.0
-   - name: set KUBECONFIG
-     run: |
-      export KUBECONFIG=/home/devopsteam/workspace/kube-configs/rke-dev-clu01-github-sa-kubeconfig.yml
-      sed -i "s/<IMAGE_VERSION>/${{ github.sha }}/g" blms-deployment-dev.yml    
-      kubectl -n tech-coe-dev apply -f blms-deployment-dev.yml
+   - run: echo "deploy to dev"
 
 
